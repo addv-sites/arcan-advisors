@@ -8,6 +8,7 @@
 */
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import EnergyPattern from '../EnergyPattern.astro';
 
 const badges = [
   { label: 'Experiencia comprobada' },
@@ -23,30 +24,11 @@ const heroImageSrc = `${import.meta.env.BASE_URL}images/hero/${heroImageFile}`;
 
 <section class="hero" id="top">
   {hasHeroImage && <img class="hero-photo" src={heroImageSrc} alt="" loading="eager" fetchpriority="high" width="1920" height="1081" />}
-  <svg class="hero-pattern" viewBox="0 0 800 500" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-    <g stroke="var(--color-gold)" stroke-width="1" opacity="0.35">
-      <line x1="40" y1="80" x2="220" y2="160"></line>
-      <line x1="220" y1="160" x2="420" y2="90"></line>
-      <line x1="220" y1="160" x2="300" y2="320"></line>
-      <line x1="420" y1="90" x2="620" y2="180"></line>
-      <line x1="300" y1="320" x2="520" y2="380"></line>
-      <line x1="520" y1="380" x2="700" y2="260"></line>
-      <line x1="620" y1="180" x2="700" y2="260"></line>
-    </g>
-    <g fill="var(--color-gold)">
-      <circle cx="40" cy="80" r="4"></circle>
-      <circle cx="220" cy="160" r="5"></circle>
-      <circle cx="420" cy="90" r="4"></circle>
-      <circle cx="300" cy="320" r="4"></circle>
-      <circle cx="620" cy="180" r="4"></circle>
-      <circle cx="520" cy="380" r="4"></circle>
-      <circle cx="700" cy="260" r="5"></circle>
-    </g>
-  </svg>
+  <EnergyPattern />
 
   <div class="hero-overlay" aria-hidden="true"></div>
 
-  <div class="container hero-content" data-reveal-group>
+  <div class="hero-content" data-reveal-group>
     <h1 class="hero-headline" data-reveal style="--reveal-index:0">
       Inteligencia energética que genera <span class="hero-accent">valor</span>
     </h1>
@@ -92,13 +74,6 @@ const heroImageSrc = `${import.meta.env.BASE_URL}images/hero/${heroImageFile}`;
     object-fit: cover;
   }
 
-  .hero-pattern {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-
   .hero-overlay {
     position: absolute;
     inset: 0;
@@ -106,10 +81,10 @@ const heroImageSrc = `${import.meta.env.BASE_URL}images/hero/${heroImageFile}`;
        oscurecer fuerte ahí y dejar la foto respirar a la derecha. */
     background: linear-gradient(
       100deg,
-      rgb(26 26 26 / 82%) 0%,
-      rgb(26 26 26 / 68%) 35%,
-      rgb(43 57 41 / 35%) 65%,
-      rgb(43 57 41 / 15%) 100%
+      rgb(0 0 0 / 82%) 0%,
+      rgb(0 0 0 / 68%) 35%,
+      rgb(3 28 14 / 35%) 65%,
+      rgb(3 28 14 / 15%) 100%
     );
   }
 
@@ -117,6 +92,12 @@ const heroImageSrc = `${import.meta.env.BASE_URL}images/hero/${heroImageFile}`;
     position: relative;
     z-index: 1;
     max-width: 46rem;
+    /* Sin .container: en el MockUp el texto va pegado al borde real de la
+       pantalla, no encerrado en el ancho centrado de 1280px que usa el
+       resto del sitio — medido, el título del mockup arranca a ~4% del
+       viewport, el nuestro arrancaba a ~28% antes de este fix. */
+    padding-left: clamp(24px, 6vw, 96px);
+    padding-right: var(--margin-mobile);
   }
 
   .hero-headline {

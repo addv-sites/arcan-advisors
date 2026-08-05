@@ -177,8 +177,15 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
     margin-top: 0.75rem;
   }
 
+  #contacto {
+    /* Pedido explícito: #E5E5E5 en vez del blanco por default de .section. */
+    background: #e5e5e5;
+  }
+
   .contact-info {
-    background: var(--color-light-gray);
+    /* Blanco, no light-gray: la sección ya es light-gray ahora — con el
+       mismo tono la card quedaría invisible, sin separación. */
+    background: var(--color-white);
     border-radius: var(--radius-lg);
     padding: 2rem;
   }

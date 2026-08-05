@@ -1,8 +1,18 @@
 ---
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import Logo from './Logo.astro';
+import EnergyPattern from './EnergyPattern.astro';
 import { SITE } from '../data/site.js';
 
 const year = new Date().getFullYear();
+
+// Reusa la foto del Hero para la banda CTA (mismo recurso, otro recorte) —
+// evita pedir un asset nuevo solo para esta franja, como en el MockUp.
+const heroImageFile = 'hero-energia.webp';
+const heroImagePath = fileURLToPath(new URL('../../public/images/hero/', import.meta.url));
+const hasCtaImage = existsSync(`${heroImagePath}${heroImageFile}`);
+const ctaImageSrc = `${import.meta.env.BASE_URL}images/hero/${heroImageFile}`;
 
 const links = [
   { href: '#top', label: 'Inicio' },
@@ -24,6 +34,10 @@ const serviceLinks = [
 ---
 
 <div class="footer-cta">
+  {hasCtaImage && <img class="footer-cta-photo" src={ctaImageSrc} alt="" loading="lazy" width="1920" height="1081" />}
+  <EnergyPattern class="footer-cta-pattern" />
+  <div class="footer-cta-fade" aria-hidden="true"></div>
+
   <div class="container footer-cta-inner">
     <div>
       <p class="footer-cta-title">¿Listo para generar <span>valor</span> en tu negocio?</p>
@@ -70,10 +84,38 @@ const serviceLinks = [
 
 <style>
   .footer-cta {
-    background: linear-gradient(100deg, var(--color-forest-green) 0%, var(--color-dark-olive) 100%);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(100deg, #000000 0%, var(--color-forest-green) 100%);
+  }
+
+  .footer-cta-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+    /* Solo se ve del lado derecho, como en el MockUp — en mobile no hay
+       espacio para que respire, se oculta (ver media query abajo). */
+    display: none;
+  }
+
+  .footer-cta-fade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #000000 0%, rgb(0 0 0 / 75%) 30%, rgb(3 28 14 / 35%) 60%, rgb(3 28 14 / 10%) 100%);
+  }
+
+  @media (min-width: 768px) {
+    .footer-cta-photo {
+      display: block;
+    }
   }
 
   .footer-cta-inner {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-wrap: wrap;
     align-items: center;

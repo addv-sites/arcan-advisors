@@ -52,9 +52,13 @@ const links = [
     position: sticky;
     top: 0;
     z-index: 50;
-    /* Sólido siempre — sin transparencia/glass, fiel al MockUp (nav opaca
-       en todo momento, no deja ver el contenido de atrás al hacer scroll). */
-    background: var(--color-forest-green);
+    /* Glass oscuro siempre — medido píxel a píxel contra el MockUp
+       (nav sobre el Hero: ~75-80% de opacidad oscura sobre la foto, no
+       100% sólido ni transparente puro). Blur constante para que se lea
+       igual arriba (sobre la foto) y una vez pasado el Hero. */
+    background: color-mix(in srgb, var(--color-forest-green) 80%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
   .site-nav.is-scrolled {

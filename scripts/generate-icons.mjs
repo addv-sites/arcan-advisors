@@ -7,9 +7,9 @@
 import sharp from 'sharp';
 import { copyFileSync } from 'node:fs';
 
-const FOREST = '#2b3929';
+const FOREST = '#031c0e'; // Forest Green corregido por el cliente 2026-08-05, ver tokens.css
 const OLIVE = '#3b4c38';
-const GOLD = '#af932f';
+const GOLD = '#c18613'; // Gold corregido por el cliente 2026-08-05, ver tokens.css
 const WHITE = '#ffffff';
 
 const PKG = 'public/favicon-package/';

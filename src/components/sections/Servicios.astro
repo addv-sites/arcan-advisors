@@ -5,7 +5,6 @@ import { fileURLToPath } from 'node:url';
 
 const servicios = [
   {
-    number: '01',
     title: 'Asesoría en Licitaciones Energéticas',
     text: 'Diseñamos y gestionamos procesos de licitación energética con enfoque estratégico, técnico y regulatorio.',
     items: [
@@ -19,7 +18,6 @@ const servicios = [
     image: 'servicio-01-licitaciones.webp',
   },
   {
-    number: '02',
     title: 'Formación en Mercado Eléctrico Mayorista',
     text: 'Formamos profesionales y empresas con conocimiento práctico y actualizado del mercado eléctrico.',
     items: ['Cursos y talleres especializados', 'Programas in-company', 'Capacitación regulatoria y operativa', 'Análisis de mercado y casos reales'],
@@ -27,7 +25,6 @@ const servicios = [
     image: 'servicio-02-formacion.webp',
   },
   {
-    number: '03',
     title: 'Comercialización de Productos Ambientales',
     text: 'Desarrollamos e intermediamos instrumentos ambientales que impulsan la sostenibilidad y generan valor.',
     items: ['Certificados de Energía Renovable (I-REC)', 'Bonos de carbono', 'Garantías de origen renovable'],
@@ -35,7 +32,6 @@ const servicios = [
     image: 'servicio-03-ambientales.webp',
   },
   {
-    number: '04',
     title: 'Consultoría Estratégica en Energía',
     text: 'Utilizamos ARCAN Intelligence™, nuestra herramienta propietaria de análisis de datos y construcción de RFPs que transforma información en decisiones estratégicas de alto impacto.',
     items: [
@@ -54,47 +50,57 @@ const servicios = [
 // <img src> roto). Apenas el archivo exista en public/images/servicios/,
 // esta misma build lo toma solo, sin tocar el componente.
 const imagesDir = fileURLToPath(new URL('../../../public/images/servicios/', import.meta.url));
-const servicesWithImageStatus = servicios.map((s) => ({
+const servicesWithImageStatus = servicios.map((s, i) => ({
   ...s,
   hasImage: existsSync(`${imagesDir}${s.image}`),
+  itemsId: `servicio-items-${i}`,
 }));
 ---
 
 <section class="section section--muted" id="servicios">
   <div class="container">
-    <div class="section-header" data-reveal>
-      <p class="section-eyebrow">Nuestros Servicios</p>
-      <h2 class="section-title">Cuatro líneas de servicio, un mismo propósito: generar valor energético.</h2>
-      <p class="section-lead">
+    <div class="section-header services-header" data-reveal>
+      <div>
+        <p class="section-eyebrow">Nuestros Servicios</p>
+        <h2 class="section-title">Cuatro líneas de servicio, un mismo propósito: generar valor energético.</h2>
+      </div>
+      <p class="section-lead services-lead">
         Ofrecemos soluciones especializadas que generan valor, impulsan la eficiencia y promueven la transición energética en México y
         Latinoamérica.
       </p>
     </div>
 
-    <div class="cards-grid cards-grid--4" data-reveal-group>
+    <div class="cards-grid cards-grid--4" id="servicios-grid" data-reveal-group>
       {servicesWithImageStatus.map((s, i) => (
         <article class="card card--media" data-reveal style={`--reveal-index:${i}`}>
+          <div class="card-body">
+            <span class="card-icon card-icon--top">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={s.icon} />
+              </svg>
+            </span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+
+            <button type="button" class="card-explore" aria-expanded="false" aria-controls={s.itemsId}>
+              <span class="card-explore-label">Explorar</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
+            </button>
+
+            <ul class="card-items" id={s.itemsId}>
+              {s.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
           <div class="card-media">
             {s.hasImage ? (
               <img src={`${import.meta.env.BASE_URL}images/servicios/${s.image}`} alt="" loading="lazy" width="400" height="300" />
             ) : (
               <span class="card-media-placeholder" aria-hidden="true"></span>
             )}
-            <span class="card-icon card-icon--overlap">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d={s.icon} />
-              </svg>
-            </span>
-          </div>
-          <div class="card-body">
-            <p class="card-number">{s.number}</p>
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
-            <ul>
-              {s.items.map((item) => (
-                <li>{item}</li>
-              ))}
-            </ul>
           </div>
         </article>
       ))}
@@ -111,14 +117,146 @@ const servicesWithImageStatus = servicios.map((s) => ({
 </section>
 
 <style>
+  /* Header 2 columnas — título a la izquierda, bajada corta a la derecha
+     con divisor dorado, tal cual el MockUp. */
+  .services-header {
+    display: block;
+  }
+
+  @media (min-width: 900px) {
+    .services-header {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 2.5rem;
+      align-items: end;
+    }
+  }
+
+  .services-lead {
+    margin-top: 1.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-gold);
+  }
+
+  @media (min-width: 900px) {
+    .services-lead {
+      margin-top: 0;
+    }
+  }
+
   .card--media {
     padding: 0;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Todo centrado — ícono, título, texto, "Explorar" — tal cual el MockUp.
+     min-height + flex-column con el botón "Explorar" empujado al fondo
+     (margin-top:auto): el texto real (literal del brandbook) varía bastante
+     de largo entre servicios — sin esto, cada card termina de una altura
+     distinta y las fotos quedan escalonadas en vez de alineadas en fila. */
+  .card-body {
+    padding: 2rem 1.75rem 1.5rem;
+    order: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 320px;
+  }
+
+  .card-body h3 {
+    margin: 0;
+  }
+
+  .card-body p {
+    margin: 0.75rem 0 0;
+  }
+
+  .card-icon--top {
+    /* Charcoal + Gold, no el tinte claro de forest-green de la base
+       (.card-icon en global.css) — el MockUp muestra el badge oscuro. */
+    background: var(--color-charcoal);
+    color: var(--color-gold);
+    margin-bottom: 1.25rem;
+  }
+
+  .card-explore {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    /* auto: se empuja al fondo del bloque de texto (min-height de arriba),
+       así todas las cards alinean "Explorar" y la foto en la misma fila. */
+    margin-top: auto;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: var(--color-gold);
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .card-explore-label {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .card-explore svg {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--duration-base) var(--ease-premium);
+  }
+
+  .card-explore[aria-expanded='true'] svg {
+    transform: rotate(90deg);
+  }
+
+  /* Bullets ocultos por default (fiel al MockUp) SOLO si el JS confirmó
+     que corrió — si falla, quedan visibles, nunca se pierde contenido.
+     Mismo patrón que src/scripts/reveal.js. */
+  .card-items {
+    list-style: none;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+    text-align: left;
+  }
+
+  html.reveal-ready .card-items {
+    display: none;
+  }
+
+  html.reveal-ready .card-items.is-open {
+    display: grid;
+  }
+
+  .card-items li {
+    font-family: var(--font-secondary);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    padding-left: 1.1rem;
+    position: relative;
+  }
+
+  .card-items li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: var(--color-gold);
   }
 
   .card-media {
+    order: 2;
     position: relative;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 10;
     background: linear-gradient(160deg, var(--color-forest-green) 0%, var(--color-dark-olive) 100%);
   }
 
@@ -131,24 +269,23 @@ const servicesWithImageStatus = servicios.map((s) => ({
   .card-media-placeholder {
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle at 20% 20%, rgb(175 147 47 / 25%) 0%, transparent 45%),
-      radial-gradient(circle at 80% 70%, rgb(175 147 47 / 18%) 0%, transparent 50%);
+    background-image: radial-gradient(circle at 20% 20%, rgb(193 134 19 / 25%) 0%, transparent 45%),
+      radial-gradient(circle at 80% 70%, rgb(193 134 19 / 18%) 0%, transparent 50%);
   }
 
-  .card-icon--overlap {
-    position: absolute;
-    left: 1.25rem;
-    bottom: -22px;
-    background: var(--color-charcoal);
-    color: var(--color-gold);
-    box-shadow: var(--shadow-ambient);
-  }
-
-  .card-body {
-    padding: 2rem 1.75rem 1.75rem;
-  }
-
-  .card-body .card-number {
-    margin-top: 0.5rem;
-  }
 </style>
+
+<script>
+  document.querySelectorAll('.card-explore').forEach((button) => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('aria-controls');
+      const list = targetId ? document.getElementById(targetId) : null;
+      if (!list) return;
+
+      const isOpen = list.classList.toggle('is-open');
+      button.setAttribute('aria-expanded', String(isOpen));
+      const label = button.querySelector('.card-explore-label');
+      if (label) label.textContent = isOpen ? 'Ocultar' : 'Explorar';
+    });
+  });
+</script>

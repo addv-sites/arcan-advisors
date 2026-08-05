@@ -1,6 +1,70 @@
 # Estado del proyecto — Arcan Advisors
 
-Última actualización: 2026-08-05 (fidelidad al MockUp: nav sólida, footer Forest Green + CTA, favicons/OG con logo real)
+Última actualización: 2026-08-05 (commiteado, pusheado y desplegado a GitHub Pages)
+
+## Primer deploy a GitHub Pages (2026-08-05)
+
+Usuario pidió explícitamente commit + push + deploy. Se agregó `.github/workflows/deploy.yml` (build con Node 20 + `actions/deploy-pages`, dispara en push a `main`). **Falta 1 paso manual, no lo pude hacer yo** — no hay `gh` CLI en este entorno para tocarlo por API: en GitHub, Settings → Pages → Source, elegir **"GitHub Actions"** (no "Deploy from a branch"). Sin ese toggle prendido una vez, el job de deploy va a fallar aunque el workflow esté bien.
+
+URL esperada una vez prendido: `https://antonioprado-sketch.github.io/arcan-prototipo/`.
+
+## Fix cards de Servicios, 3er ajuste (2026-08-05)
+
+Quedaban 2 problemas reales:
+1. **Alturas asimétricas** → fotos escalonadas en vez de alineadas en fila. Causa: el texto real (literal del brandbook) varía mucho de largo entre los 4 servicios (servicio 04 es bastante más largo que los otros 3), y sin nada que lo compense cada card terminaba de una altura distinta. Fix: `.card-body` con `min-height:320px` + `display:flex;flex-direction:column` + `.card-explore{margin-top:auto}` — el link "Explorar" (y todo lo que sigue) queda siempre al fondo del bloque de texto, así las fotos alinean en fila sin importar cuánto texto tenga cada servicio.
+2. **Botón "ver más/menos servicios" sacado** — quedan las 4 cards visibles siempre. Se sacó el HTML, el CSS del toggle y el JS del grid-collapse. El botón "Explorar" por card (que expande/colapsa los bullets) se mantiene, es otra cosa.
+
+Detalle menor conocido, no crítico: si se expande una sola card con "Explorar", las otras 3 quedan con espacio en blanco abajo (el grid estira toda la fila a la altura de la card expandida). No se optimizó porque el mockup no muestra un estado expandido de referencia — es un agregado propio para no perder los bullets.
+
+**Nota de proceso:** todavía no está commiteado.
+
+## Fix cards de Servicios (2026-08-05, mismo día)
+
+El usuario marcó que las cards de Servicios no seguían el MockUp. Comparé recorte contra recorte y encontré 4 diferencias reales:
+1. Orden invertido: mockup = ícono arriba → título → texto → "Explorar →" → foto abajo. Yo tenía foto arriba con ícono superpuesto.
+2. Header de la sección era 1 columna; el mockup usa 2 (título izq., bajada corta a la derecha con divisor dorado vertical).
+3. Yo tenía un número de card (01/02/03/04) que el mockup no muestra — sacado.
+4. Ícono: el mockup usa badge circular oscuro (casi negro) con ícono dorado — yo tenía el tinte claro de forest-green (`.card-icon` base de `global.css`, pensado para Nosotros/Producto, no para esto).
+
+Corregido todo excepto el link "Explorar →": no hay páginas individuales por servicio en un sitio de una sola página, así que mantuve la lista de bullets (contenido literal real del brandbook, ya establecido como requisito) en el lugar donde iría ese link. Decisión de adaptación, no un olvido.
+
+**2do ajuste, mismo día:** el usuario marcó que seguía mal. Hice un zoom real a una card del MockUp (no solo el recorte general) y encontré lo que faltaba: **todo el contenido va centrado** (ícono, título, texto, "Explorar"), y **los bullets no se muestran por default** — solo texto corto + link "Explorar →", sin lista visible.
+
+Implementado: `.card-body { text-align: center }`, y el link "Explorar" ahora es un botón real que expande/colapsa los bullets (`.card-items`, oculto vía `html.reveal-ready` — mismo patrón de progressive enhancement que el resto del sitio: si el JS falla, los bullets quedan visibles, nunca se pierde contenido). Flecha rota 90° al expandir, label cambia a "Ocultar". Verificado clickeando en el navegador — funciona.
+
+**Nota de proceso:** todavía no está commiteado.
+
+## Ronda 3 de fidelidad al MockUp (2026-08-05)
+
+4 fases, todas verificadas visualmente en navegador:
+
+1. **Nav glass real** — medí píxeles del MockUp con cuidado de no caer en texto/botones (primer intento cayó en el botón dorado y en bordes de texto, dio falso positivo). Con muestras limpias: el nav sobre el Hero es un tinte oscuro semi-transparente (~75-80% opacidad), no sólido ni transparente puro. `Nav.astro` ahora usa `color-mix(...80%...) + backdrop-filter: blur(12px)` **siempre** (no solo al hacer scroll).
+2. **Hero alineado a la izquierda real** — medido: el título arrancaba al 28% del viewport (encerrado en el `.container` centrado de 1280px), el MockUp arranca al ~4%. Se sacó `.hero-content` del `.container` estándar, ahora usa `padding-left: clamp(24px, 6vw, 96px)` propio. Verificado: quedó en 6%, calza con nav/logo. De paso corregí el overlay del Hero, que tenía el verde/negro viejo hardcodeado en vez de las variables actuales.
+3. **Servicios colapsable** — 2 cards visibles por default, botón "Ver más servicios" expande a las 4 (toggle de clase + `aria-expanded`). Progressive enhancement: si el JS falla, se ven las 4 igual (mismo patrón que `reveal.js`).
+4. **Banner "Soluciones inteligentes..."** — mismo texto de siempre, restyle con fade negro→Forest Green (`#031C0E` sin tocar el tono), sin agregar las cifras del MockUp (ver decisión abajo).
+5. **Banda CTA "¿Listo para generar valor...?"** — estilo exacto del MockUp + foto real: reusa `hero-energia.webp` (mismo asset del Hero, recorte distinto vía `object-position: right center` + fade), evita pedir un asset nuevo. Un componente nuevo `src/components/EnergyPattern.astro` extrae el patrón "Red de Energía" (antes duplicado a mano) para reusarlo acá y en el Hero.
+6. **Fondo de Contacto** → `#E5E5E5` explícito (antes blanco por default de `.section`). La card de contacto (`.contact-info`) pasó de light-gray a blanco para no quedar invisible contra el nuevo fondo del mismo tono.
+
+**Decisión explícita del usuario:** el banner de "Impacto" del MockUp (150+, 80+, 7 países, +5GW) **no se agrega** — sigue siendo placeholder no confirmado. Lo que se pidió fue el *efecto visual* (fade negro→verde), no los datos — se aplicó ese estilo al banner de texto ya existente en vez de crear una sección nueva con cifras.
+
+**Nota de proceso:** todavía no está commiteado — sigue vigente que no se hace `git commit`/`push` sin pedido puntual.
+
+## Corrección de colores reales (2026-08-05)
+
+El usuario corrigió explícitamente 2 colores contra lo que decía el PDF del brandbook — **estos son ahora los valores reales, no volver a los del PDF sin que el usuario lo pida** (documentado en el comentario de `src/styles/tokens.css`, única fuente de ambos colores):
+
+- `--color-forest-green`: PDF `#2b3929` → real **`#031C0E`**.
+- `--color-gold`: PDF `#af932f` → real **`#C18613`**.
+
+Cascada automática a nav, footer, hero, banner, sombras, `theme-color`, `manifest.webmanifest`, OG image (`scripts/generate-icons.mjs` actualizado) y el placeholder de fondo de las cards de Servicios (tenía el gold viejo hardcodeado en RGB decimal, no en la variable — corregido también).
+
+Contraste recalculado con ambos valores nuevos, sin regresiones (mejoras en casi todos los casos):
+- White sobre Forest Green: 17.85:1
+- Gold sobre Forest Green: 5.68:1 (antes 4.09:1 — ahora pasa AA de texto normal, no solo "large text")
+- Light Gray sobre Forest Green: 14.17:1
+- Charcoal sobre Gold (texto de botón primario): 5.54:1
+
+**Nota de proceso:** todavía no está commiteado — el usuario revocó la autorización de commit/push automático (ver [[feedback_workflow_rules]]), ahora requiere pedido puntual cada vez.
 
 ## Ronda 2 de fidelidad al MockUp (2026-08-05)
 
@@ -47,7 +111,7 @@ Sitio corporativo estático para **Arcan Advisors** (consultora en inteligencia 
 | 5 — Accesibilidad, performance, verificación | ✅ Completada 2026-08-05 | Ver detalle abajo ("Auditoría Fase 5"). Build OK, `npm audit` en 0 vulnerabilidades. |
 | 6 — Prompts de imágenes + mapeo de carpetas | ✅ Completada 2026-08-05 | Ver `IMAGENES_PENDIENTES.md` — 5 prompts (hero + 4 servicios) con ruta de destino exacta y checklist de integración. No se agregaron `<img>` sin archivo real detrás (evita el error de OG image ya pisado antes). |
 
-**2026-08-05:** usuario autorizó terminar todas las fases restantes seguidas, sin pausar a pedir confirmación por fase, y hacer commit+push al cerrar cada una. Sigue vigente la regla de no incluir nada no pedido/inventado.
+**2026-08-05:** usuario autorizó terminar todas las fases restantes seguidas, sin pausar a pedir confirmación por fase. **Actualización (mismo día, más tarde):** la parte de "commit+push automático al cerrar cada fase" quedó revocada — ahora no se hace `git commit`/`git push` sin que el usuario lo pida puntualmente cada vez. Sigue vigente la regla de no incluir nada no pedido/inventado.
 
 ## Decisiones ya tomadas
 

@@ -2,15 +2,20 @@
   Tokens extraídos literal de "03. Sistema Visual" y "04. Estrategia de Marca"
   (Brand Book Arcan Advisors v1.0, julio 2026). No modificar sin validar
   contra el brandbook — regla de fidelidad de marca del proyecto.
+
+  Excepciones corregidas por el usuario el 2026-08-05 (no volver a los
+  valores del PDF sin que el usuario lo pida):
+  --color-forest-green: PDF dice #2b3929 → real es #031C0E.
+  --color-gold: PDF dice #af932f → real es #C18613.
 */
 :root {
   /* Colores principales */
-  --color-forest-green: #2b3929;
+  --color-forest-green: #031c0e;
   --color-dark-olive: #3b4c38;
   --color-sage-green: #556449;
 
   /* Colores de acento */
-  --color-gold: #af932f;
+  --color-gold: #c18613;
   --color-brick-red: #8a3a2a;
 
   /* Colores neutros */
@@ -52,8 +57,8 @@
   --radius-full: 9999px;
 
   /* Elevación — sombras ambientales con tinte Forest Green, nunca duras */
-  --shadow-ambient: 0 12px 32px -8px rgb(43 57 41 / 12%);
-  --shadow-ambient-sm: 0 4px 12px -4px rgb(43 57 41 / 10%);
+  --shadow-ambient: 0 12px 32px -8px rgb(3 28 14 / 12%);
+  --shadow-ambient-sm: 0 4px 12px -4px rgb(3 28 14 / 10%);
 
   /* Motion */
   --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
