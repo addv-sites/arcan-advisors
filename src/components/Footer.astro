@@ -23,6 +23,16 @@ const serviceLinks = [
 ];
 ---
 
+<div class="footer-cta">
+  <div class="container footer-cta-inner">
+    <div>
+      <p class="footer-cta-title">¿Listo para generar <span>valor</span> en tu negocio?</p>
+      <p class="footer-cta-sub">Hagamos de la energía una ventaja estratégica para tu empresa.</p>
+    </div>
+    <a class="btn btn-primary" href="#contacto">Contáctanos</a>
+  </div>
+</div>
+
 <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand">
@@ -59,10 +69,43 @@ const serviceLinks = [
 </footer>
 
 <style>
+  .footer-cta {
+    background: linear-gradient(100deg, var(--color-forest-green) 0%, var(--color-dark-olive) 100%);
+  }
+
+  .footer-cta-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 2.5rem;
+  }
+
+  .footer-cta-title {
+    font-family: var(--font-primary);
+    font-weight: 700;
+    font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+    color: var(--color-white);
+    margin: 0;
+  }
+
+  .footer-cta-title span {
+    color: var(--color-gold);
+  }
+
+  .footer-cta-sub {
+    font-family: var(--font-secondary);
+    color: var(--color-light-gray);
+    margin: 0.5rem 0 0;
+  }
+
   .site-footer {
-    background: var(--color-charcoal);
+    /* Forest Green de marca, no Charcoal — fiel a la paleta y al MockUp. */
+    background: var(--color-forest-green);
     color: var(--color-light-gray);
     padding-top: var(--stack-lg);
+    border-top: 1px solid rgb(255 255 255 / 10%);
   }
 
   .footer-inner {
@@ -80,8 +123,6 @@ const serviceLinks = [
   .footer-brand p {
     font-family: var(--font-secondary);
     font-size: 0.9rem;
-    /* Light Gray, no Medium Gray: Medium Gray sobre Charcoal da 3.03:1, no
-       pasa AA (min 4.5:1). Light Gray sobre Charcoal da 13.82:1. */
     color: var(--color-light-gray);
     margin-top: 1rem;
     max-width: 28rem;
@@ -110,7 +151,9 @@ const serviceLinks = [
 
   .footer-col a:hover,
   .footer-col a:focus-visible {
-    color: var(--color-gold);
+    /* White, no Gold: Gold sobre Forest Green da 4.09:1, no pasa AA para
+       texto normal (min 4.5:1). White da 12.21:1. */
+    color: var(--color-white);
   }
 
   .footer-bottom {

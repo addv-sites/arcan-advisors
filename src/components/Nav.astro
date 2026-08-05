@@ -52,14 +52,12 @@ const links = [
     position: sticky;
     top: 0;
     z-index: 50;
+    /* Sólido siempre — sin transparencia/glass, fiel al MockUp (nav opaca
+       en todo momento, no deja ver el contenido de atrás al hacer scroll). */
     background: var(--color-forest-green);
-    transition: background-color var(--duration-base) var(--ease-premium), backdrop-filter var(--duration-base) var(--ease-premium);
   }
 
   .site-nav.is-scrolled {
-    background: color-mix(in srgb, var(--color-forest-green) 82%, transparent);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgb(255 255 255 / 10%);
   }
 

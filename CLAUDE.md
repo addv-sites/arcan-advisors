@@ -30,6 +30,9 @@ No hay `npm test` ni Docker en este proyecto — no los propongas ni los asumas.
 - `src/layouts/BaseLayout.astro` — SEO completo: canonical, OG/Twitter, JSON-LD (Organization+ProfessionalService+ContactPoint) armado desde `SITE` (`src/data/site.js`), icons/manifest linkeados con `import.meta.env.BASE_URL` (nunca hardcodear `/algo`, ver regla 2).
 - `public/robots.txt`, `public/sitemap.xml`, `public/manifest.webmanifest` — estáticos, no procesados por Astro. Tienen el `base` actual (`/arcan-prototipo/`) hardcodeado — ver lista de "4 lugares" en `PROJECT_STATE.md` para la fase post-aprobación de dominio.
 - **Patrón de imagen opcional (Hero, Servicios):** el componente chequea `existsSync` en build-time sobre `public/images/.../archivo.webp` — si existe, `<img>` real; si no, fondo/placeholder de marca. Nunca un `<img src>` apuntando a un archivo que no existe. Al agregar una imagen nueva: **optimizarla primero** (WebP, `sharp`, ver `scripts/generate-icons.mjs` como referencia) — las que llegan del cliente pueden pesar 2-3MB sin comprimir y cuelgan el navegador.
+- **`public/favicon-package/`** — favicon-package real que entregó el cliente (logo real, no el reconstruido). `scripts/generate-icons.mjs` lo convierte a los formatos/tamaños del sitio. Si el cliente entrega un paquete actualizado, reemplazar esta carpeta y volver a correr el script — no rediseñar el logo a mano.
+- **Nav sólida siempre, sin transparencia/glass** — corregido explícitamente por el cliente contra el `MockUp site.png`. No reintroducir `backdrop-filter`/transparencia en `Nav.astro` sin que lo pidan de nuevo.
+- **Footer usa Forest Green, no Charcoal** — mismo criterio, corrección explícita del cliente comparando contra la paleta oficial (lámina "03. Sistema Visual").
 
 ## Reglas del protocolo (no negociables en este repo)
 

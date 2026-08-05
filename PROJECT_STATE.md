@@ -1,6 +1,18 @@
 # Estado del proyecto — Arcan Advisors
 
-Última actualización: 2026-08-05 (fotografía real integrada + fidelidad al MockUp)
+Última actualización: 2026-08-05 (fidelidad al MockUp: nav sólida, footer Forest Green + CTA, favicons/OG con logo real)
+
+## Ronda 2 de fidelidad al MockUp (2026-08-05)
+
+Usuario marcó 3 cosas puntuales comparando contra `MockUp site.png`:
+
+1. **Nav con transparencia** — el estado `.is-scrolled` tenía glassmorphism (`backdrop-filter`/`color-mix`) inspirado en el `DESIGN.md` no-oficial del prototipo de Desktop. Se sacó: `Nav.astro` ahora es sólido Forest Green siempre, en todo momento.
+2. **Footer no igual al mockup** — le faltaba la banda CTA ("¿Listo para generar valor en tu negocio?", copy literal del mockup) antes del footer. Se agregó con un solo botón "Contáctanos" (el mockup tiene también "Agenda una reunión", pero no hay link real de agenda — usuario confirmó omitirlo, no inventar uno). Sin íconos sociales (no hay URLs reales de Arcan Advisors — usuario confirmó no ponerlos).
+3. **Paleta no respetada en el footer** — usaba Charcoal (`#1a1a1a`) en vez de Forest Green (`#2b3929`). Corregido. De paso, el hover de los links del footer usaba Gold como texto (fallaba AA, 4.09:1) — cambiado a White (12.21:1), mismo criterio que el resto del sitio.
+
+**Favicons/OG image con el logo real (2026-08-05):** el usuario generó su propio favicon-package (con herramienta externa, a partir del logo real — no el reconstruido a mano) y lo puso en `public/favicon-package/`. `scripts/generate-icons.mjs` se reescribió para convertir esos archivos reales a los tamaños que el sitio necesita (favicons, apple-touch-icon, manifest icons, favicon.ico) y componer el OG image con el logo real en vez del isólogo dibujado a polígonos. El gap de "logo vectorial" del `Logo.astro` (Nav/Footer) **sigue abierto** — el favicon-package es raster, no vector, no sirve para reemplazar el SVG escalable del componente.
+
+**Nota:** durante esta ronda los archivos `public/*.png` (favicons/OG previos) desaparecieron del disco fuera de mi control — se regeneraron sin pérdida real (eran artefactos de build reproducibles). Si vuelve a pasar algo similar con un archivo que no sea reproducible, parar y preguntar antes de regenerar/asumir.
 
 ## Post-fase 6: fotografía real + gaps de fidelidad al MockUp (2026-08-05)
 

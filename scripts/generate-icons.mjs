@@ -1,48 +1,35 @@
-// Utilidad de build-time: rasteriza el isólogo (misma geometría que
-// src/components/Logo.astro) a favicons/manifest icons/OG image reales.
-// Correr manualmente si el logo cambia: `node scripts/generate-icons.mjs`.
+// Utilidad de build-time: arma favicons/manifest icons/OG image reales a
+// partir del logo real que entregó el cliente en public/favicon-package/
+// (generado por él con su propia herramienta — no se toca ese diseño acá,
+// solo se convierte a los tamaños/formatos que el sitio necesita).
+// Correr de nuevo si el cliente entrega un favicon-package actualizado:
+// `node scripts/generate-icons.mjs`.
 import sharp from 'sharp';
-import { mkdirSync } from 'node:fs';
+import { copyFileSync } from 'node:fs';
 
 const FOREST = '#2b3929';
 const OLIVE = '#3b4c38';
 const GOLD = '#af932f';
 const WHITE = '#ffffff';
-const LIGHT_GRAY = '#e5e5e5';
 
-mkdirSync('public', { recursive: true });
+const PKG = 'public/favicon-package/';
 
-// Isotipo: mismos 3 polígonos que Logo.astro (viewBox 0 0 140 100).
-const mark = (fill = GOLD) => `
-  <polygon points="18,90 38,90 62,10 52,10" fill="${fill}"/>
-  <polygon points="58,90 78,90 102,10 92,10" fill="${fill}"/>
-  <polygon points="86,90 106,90 106,52 92,52" fill="${fill}"/>
-`;
+// 1. Favicons / manifest icons — conversión directa del paquete real,
+//    sin redibujar el logo.
+await sharp(`${PKG}favicon-16x16.png`).toFile('public/favicon-16.png');
+await sharp(`${PKG}favicon-32x32.png`).toFile('public/favicon-32.png');
+await sharp({ create: { width: 180, height: 180, channels: 3, background: FOREST } })
+  .composite([{ input: `${PKG}apple-touch-icon.png` }])
+  .png()
+  .toFile('public/apple-touch-icon.png');
+await sharp(`${PKG}android-chrome-192x192.png`).toFile('public/icon-192.png');
+await sharp(`${PKG}android-chrome-512x512.png`).toFile('public/icon-512.png');
+copyFileSync(`${PKG}favicon.ico`, 'public/favicon.ico');
+console.log('✓ favicons/manifest icons (desde favicon-package real)');
 
-function squareIconSvg(size, { padding = 0.2 } = {}) {
-  const pad = size * padding;
-  const inner = size - pad * 2;
-  return `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-      <rect width="${size}" height="${size}" fill="${FOREST}"/>
-      <g transform="translate(${pad}, ${pad + inner * 0.09}) scale(${inner / 140})">
-        ${mark(GOLD)}
-      </g>
-    </svg>
-  `;
-}
-
-function faviconSvg(size) {
-  // Favicon chico: fondo transparente, mark dorado solo (más legible a 16-32px).
-  return `
-    <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 140 100">
-      ${mark(GOLD)}
-    </svg>
-  `;
-}
-
-function ogImageSvg(width, height) {
-  const cx = width * 0.5;
+// 2. OG image — fondo/patrón/texto propios del sitio + el logo real
+//    (favicon-1024x1024.png) compuesto encima, en vez del isólogo dibujado.
+function ogBackgroundSvg(width, height) {
   return `
     <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
       <defs>
@@ -66,30 +53,24 @@ function ogImageSvg(width, height) {
         <circle cx="460" cy="470" r="5"/>
         <circle cx="960" cy="270" r="6"/>
       </g>
-      <g transform="translate(${cx - 90}, ${height / 2 - 130}) scale(1.3)">
-        ${mark(GOLD)}
-      </g>
-      <text x="${cx}" y="${height / 2 + 60}" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" fill="${WHITE}" letter-spacing="4">ARCAN ADVISORS</text>
-      <text x="${cx}" y="${height / 2 + 110}" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" letter-spacing="8" fill="${GOLD}">INTELIGENCIA ENERGÉTICA</text>
+      <text x="${width / 2}" y="${height / 2 + 150}" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="64" font-weight="700" fill="${WHITE}" letter-spacing="4">ARCAN ADVISORS</text>
+      <text x="${width / 2}" y="${height / 2 + 200}" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" letter-spacing="8" fill="${GOLD}">INTELIGENCIA ENERGÉTICA</text>
     </svg>
   `;
 }
 
-const jobs = [
-  { svg: faviconSvg(64), out: 'public/favicon-32.png', size: 32 },
-  { svg: faviconSvg(64), out: 'public/favicon-16.png', size: 16 },
-  { svg: squareIconSvg(180), out: 'public/apple-touch-icon.png', size: 180 },
-  { svg: squareIconSvg(192), out: 'public/icon-192.png', size: 192 },
-  { svg: squareIconSvg(512), out: 'public/icon-512.png', size: 512 },
-];
+const OG_W = 1200;
+const OG_H = 630;
+const markSize = 220;
 
-for (const job of jobs) {
-  await sharp(Buffer.from(job.svg)).resize(job.size, job.size).png().toFile(job.out);
-  console.log('✓', job.out);
-}
-
-await sharp(Buffer.from(ogImageSvg(1200, 630))).png().toFile('public/og-image.png');
-console.log('✓ public/og-image.png');
-
-await sharp(Buffer.from(faviconSvg(64))).resize(64, 64).png().toFile('public/favicon.ico.png');
-console.log('✓ public/favicon.ico.png (renombrar/usar como favicon.ico si se necesita formato .ico real)');
+await sharp(Buffer.from(ogBackgroundSvg(OG_W, OG_H)))
+  .composite([
+    {
+      input: await sharp(`${PKG}favicon-1024x1024.png`).resize(markSize, markSize).toBuffer(),
+      left: Math.round(OG_W / 2 - markSize / 2),
+      top: Math.round(OG_H / 2 - markSize / 2 - 60),
+    },
+  ])
+  .png()
+  .toFile('public/og-image.png');
+console.log('✓ public/og-image.png (con logo real)');
