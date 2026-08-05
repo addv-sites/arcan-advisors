@@ -153,6 +153,13 @@ const links = [
     border-top: 1px solid rgb(255 255 255 / 10%);
   }
 
+  /* [hidden] empata en especificidad con .nav-mobile-menu — sin esto,
+     display:flex le gana al atributo hidden nativo y el menú queda
+     visible siempre. */
+  .nav-mobile-menu[hidden] {
+    display: none;
+  }
+
   .nav-mobile-menu a {
     color: var(--color-white);
     text-decoration: none;
