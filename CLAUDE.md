@@ -41,6 +41,10 @@ No hay `npm test` ni Docker en este proyecto — no los propongas ni los asumas.
 7. **`npm audit` en 0 vulnerabilidades antes de cerrar una fase de verificación.** Astro está fijado en `^7.1.6` (subido desde 5.x en Fase 5 por 2 CVEs high) — no bajar la versión sin volver a auditar.
 8. **Colores de marca no se tocan, pero dónde se usan como texto sí importa.** Gold (`#af932f`) falla AA como texto chico sobre fondos claros (2.98:1) — usarlo solo en fondos/bordes/íconos/texto grande (≥24px), nunca en labels/eyebrows chicos sobre blanco. Ver auditoría de contraste completa en `PROJECT_STATE.md`.
 
+## Imágenes pendientes
+
+Ver `IMAGENES_PENDIENTES.md` — prompts + ruta de destino exacta para la fotografía que falta (hero + 4 cards de servicios). No agregar `<img src>` sin el archivo real ya puesto en esa ruta.
+
 ## Dónde está la fuente de verdad de marca
 
 `I:\Unidades compartidas\008 - Arcan Advisor\Proyectos\Pagina premium\ADDV Generado\Material\Branding\` — Brand Book v1.0, láminas 01-09 + `MockUp site.png`. Ante cualquier duda de diseño o copy, se resuelve ahí.

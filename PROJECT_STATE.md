@@ -1,6 +1,6 @@
 # Estado del proyecto — Arcan Advisors
 
-Última actualización: 2026-08-05 (cierre Fase 5)
+Última actualización: 2026-08-05 (cierre Fase 6 — todas las fases planeadas completas)
 
 **Nota de identidad:** este proyecto es el sitio del cliente **Arcan Advisors**. No tiene relación con "ADDV" (agencia propia de quien lo desarrolla) — ninguna referencia a ADDV debe aparecer en el sitio.
 
@@ -21,7 +21,7 @@ Sitio corporativo estático para **Arcan Advisors** (consultora en inteligencia 
 | 3 — Nosotros / Servicios / Producto | ✅ Completada 2026-08-05 | Nosotros (Esencia de marca + Propósito/Misión/Visión + 5 Valores, lit. lámina 02 y 04), Servicios (4 líneas completas con bullets, lit. lámina 05), Producto (ARCAN Intelligence™, lit. servicio 04 + disclaimer de posicionamiento del cliente). Build OK, copy verificado en `dist/index.html`. |
 | 4 — Contacto, WhatsApp form, SEO técnico | ✅ Completada 2026-08-05 | Form con validación cliente → WhatsApp (no pierde datos si falla validación), footer, botón flotante WhatsApp, favicons/OG image reales (generados desde el isólogo con `scripts/generate-icons.mjs` + sharp), JSON-LD Organization+ProfessionalService+ContactPoint, robots.txt, sitemap.xml, manifest.webmanifest. Build OK, paths base-aware verificados en `dist/`. |
 | 5 — Accesibilidad, performance, verificación | ✅ Completada 2026-08-05 | Ver detalle abajo ("Auditoría Fase 5"). Build OK, `npm audit` en 0 vulnerabilidades. |
-| 6 — Prompts de imágenes + mapeo de carpetas | ⏳ Pendiente | Para assets que no se pueden generar directamente |
+| 6 — Prompts de imágenes + mapeo de carpetas | ✅ Completada 2026-08-05 | Ver `IMAGENES_PENDIENTES.md` — 5 prompts (hero + 4 servicios) con ruta de destino exacta y checklist de integración. No se agregaron `<img>` sin archivo real detrás (evita el error de OG image ya pisado antes). |
 
 **2026-08-05:** usuario autorizó terminar todas las fases restantes seguidas, sin pausar a pedir confirmación por fase, y hacer commit+push al cerrar cada una. Sigue vigente la regla de no incluir nada no pedido/inventado.
 
@@ -66,7 +66,11 @@ Sitio corporativo estático para **Arcan Advisors** (consultora en inteligencia 
 
 1. **Logo vectorial**: no existe `.ai`/`.eps`/`.svg` fuente en el material entregado, solo capturas de slide. `src/components/Logo.astro` es una reconstrucción best-effort en SVG (geometría de 3 polígonos). Reemplazar si el diseñador entrega el vectorial original.
 2. **Fuente Tahoma**: sin archivo licenciado. Implementado como font-stack de sistema, no embebido.
-3. **Fotografía real** de servicios/hero: pendiente de Fase 6 (prompts de generación + mapeo de carpetas) salvo que el usuario provea fotografía propia.
+3. **Fotografía real** de servicios/hero: prompts + rutas de destino listos en `IMAGENES_PENDIENTES.md` (Fase 6). El sitio funciona y se ve terminado sin ellas (Hero usa el patrón de marca, Servicios es icon-first) — es mejora, no bloqueante, salvo que el usuario prefiera proveer fotografía propia.
+
+## Todas las fases planeadas (1-6) completas — 2026-08-05
+
+Sitio funcional de punta a punta: Nav, Hero, Nosotros, Servicios, Producto, Contacto (form→WhatsApp), Footer, SEO técnico, accesibilidad AA verificada, 0 vulnerabilidades npm, prompts de imágenes documentados. Lo que sigue es iterar sobre los 3 gaps de arriba (logo vectorial real, fuente Tahoma licenciada, fotografía) a medida que el cliente los provea — no hay más fases de construcción base pendientes.
 
 ## Excepciones al protocolo addv-web-app (2026-08-05)
 
