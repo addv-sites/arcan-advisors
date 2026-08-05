@@ -1,6 +1,19 @@
 # Estado del proyecto — Arcan Advisors
 
-Última actualización: 2026-08-05 (cierre Fase 6 — todas las fases planeadas completas)
+Última actualización: 2026-08-05 (badge de logo "glow" en Hero + fix de menú móvil)
+
+## Post-fase 6: badge de logo "glow" en el Hero (2026-08-05)
+
+El usuario pidió usar `LogoRB.png` (el logo con efecto glow que mandó, en `C:\Users\Antonio\Desktop\stitch_arcan_advisors_premium_site\LogoRB.png`) en vez del logo reconstruido en SVG. Hallazgo técnico: **el canal alfa del archivo está roto** — casi toda la imagen (incluido el glow dorado) tiene `alpha=0` con color "quemado" en el RGB; solo ~2% de los píxeles (un contorno fino) es realmente opaco. Usado tal cual con transparencia real, el logo casi no se vería.
+
+Se reconstruyó la transparencia por color (chroma-key sobre el RGB, ya que el alfa no sirve), se recortó al contenido real y se optimizó a `public/images/hero/logo-glow-badge.webp`. Con luz verde del usuario, quedó así:
+- **Hero**: badge de vidrio (glassmorphism, backdrop-blur) con este logo, a la derecha del headline en desktop (`src/components/sections/Hero.astro`, `.hero-glow-badge`). Layout en grid real (no `position:absolute`) para que nunca se superponga con el texto — hubo un intento inicial con overlay absoluto que sí pisaba el texto de trust badges en pantallas anchas, corregido antes de subir.
+- **Nav/Footer**: siguen con el logo reconstruido en SVG (`Logo.astro`) — a ese tamaño chico, el archivo con glow se ve borroso/ilegible, y en fondos claros el chroma-key deja un halo gris sucio.
+- Gap de asset pendiente: si el cliente consigue un archivo con transparencia real (o el vectorial original), reemplazar `logo-glow-badge.webp` directo, sin tocar el resto de `Hero.astro`.
+
+## Bug encontrado y corregido probando en navegador (2026-08-05)
+
+El menú móvil (`Nav.astro`) quedaba visible siempre, tapando el Hero — `.nav-mobile-menu{display:flex}` empataba en especificidad con el atributo `[hidden]` nativo y ganaba por orden de cascada. Se agregó `.nav-mobile-menu[hidden]{display:none}` explícito. Encontrado recién al abrir la demo real en Chrome — ojo con este tipo de bug (atributo `hidden` + una clase con `display` propio) en componentes futuros.
 
 **Nota de identidad:** este proyecto es el sitio del cliente **Arcan Advisors**. No tiene relación con "ADDV" (agencia propia de quien lo desarrolla) — ninguna referencia a ADDV debe aparecer en el sitio.
 
