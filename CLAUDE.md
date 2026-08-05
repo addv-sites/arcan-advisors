@@ -1,0 +1,40 @@
+# CLAUDE.md — contexto operativo para este repo
+
+Sitio corporativo estático de **Arcan Advisors**. Astro (`output: 'static'`) → GitHub Pages. Sin backend, sin Docker, sin pruebas unitarias (excepción explícita de este proyecto, ver `PROJECT_STATE.md`).
+
+## Comandos
+
+```bash
+npm install
+npm run dev       # servidor local
+npm run build     # build de producción a dist/ — correr siempre antes de dar una fase por cerrada
+npm run preview   # sirve el build de dist/ localmente
+```
+
+No hay `npm test` ni Docker en este proyecto — no los propongas ni los asumas.
+
+## Arquitectura
+
+- `astro.config.mjs` — `base: '/arcan-prototipo/'` mientras el sitio vive en `github.io/arcan-prototipo`. Cuando se conecte `www.arcanadvisors.com`: quitar `base`, cambiar `site`, agregar `public/CNAME`. Está comentado in-code.
+- `src/styles/tokens.css` — variables CSS de marca (color/tipografía/spacing/radios). Fuente: Brand Book Arcan Advisors v1.0. **No modificar valores sin validar contra el brandbook.**
+- `src/styles/global.css` — reset + utilidades base, importa `tokens.css`.
+- `src/components/Logo.astro` — isólogo con 3 variantes (`principal` | `negativa` | `mono`) vía prop `variant`, y prop `markOnly` para isotipo solo. Es una reconstrucción SVG best-effort (sin vectorial fuente disponible) — ver gap en `PROJECT_STATE.md`.
+- `src/data/site.js` — contacto real (email, WhatsApp, dirección) + `getWhatsAppLink()` para el formulario de contacto (sin backend, arma mensaje y abre WhatsApp).
+- `src/layouts/BaseLayout.astro` — head base (Lato vía Google Fonts, meta viewport, skip link). SEO completo (JSON-LD, OG, sitemap) llega en Fase 4.
+
+## Reglas del protocolo (no negociables en este repo)
+
+1. **Fidelidad de marca absoluta.** Colores, tipografía (Lato + Tahoma, no alternativas "similares"), copy institucional (Misión/Visión/Servicios/Producto) van literal desde el brandbook — no resumir, no reinterpretar, no inventar cifras sin confirmar.
+2. **Compatibilidad GitHub Pages siempre.** Sin Node/backend en producción, rutas base-aware (`import.meta.env.BASE_URL` o `Astro.url`, nunca `href="/algo"` a mano), build real verificado antes de cerrar cualquier cambio.
+3. **Fases con confirmación explícita.** No se implementa nada sin un "implementá fase N" del usuario. Plan/alternativas se presentan primero.
+4. **No `git push` sin permiso explícito**, cada vez.
+5. **`PROJECT_STATE.md` y este archivo se actualizan al cerrar cada fase** — no esperar al final del proyecto.
+6. **`npm run build` real antes de reportar una fase como terminada** — no alcanza con que el dev server funcione.
+
+## Dónde está la fuente de verdad de marca
+
+`I:\Unidades compartidas\008 - Arcan Advisor\Proyectos\Pagina premium\ADDV Generado\Material\Branding\` — Brand Book v1.0, láminas 01-09 + `MockUp site.png`. Ante cualquier duda de diseño o copy, se resuelve ahí.
+
+## Proyecto paralelo (solo referencia, no tocar)
+
+`C:\Users\Antonio\Desktop\stitch_arcan_advisors_premium_site` — prototipo HTML/CSS/JS con el mismo remote de GitHub. No es el proyecto canónico, no se mergea ni se pushea desde ahí. Su tipografía (Montserrat/Source Sans) es incorrecta contra el brandbook real — no copiarla.

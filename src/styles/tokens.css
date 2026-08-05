@@ -1,0 +1,62 @@
+/*
+  Tokens extraídos literal de "03. Sistema Visual" y "04. Estrategia de Marca"
+  (Brand Book Arcan Advisors v1.0, julio 2026). No modificar sin validar
+  contra el brandbook — regla de fidelidad de marca del proyecto.
+*/
+:root {
+  /* Colores principales */
+  --color-forest-green: #2b3929;
+  --color-dark-olive: #3b4c38;
+  --color-sage-green: #556449;
+
+  /* Colores de acento */
+  --color-gold: #af932f;
+  --color-brick-red: #8a3a2a;
+
+  /* Colores neutros */
+  --color-charcoal: #1a1a1a;
+  --color-medium-gray: #666666;
+  --color-light-gray: #e5e5e5;
+  --color-white: #ffffff;
+
+  /* Roles funcionales */
+  --color-surface: var(--color-white);
+  --color-surface-alt: var(--color-light-gray);
+  --color-text: var(--color-charcoal);
+  --color-text-muted: var(--color-medium-gray);
+  --color-primary: var(--color-forest-green);
+  --color-accent: var(--color-gold);
+  --color-accent-secondary: var(--color-brick-red);
+
+  /* Tipografía — Lato (principal, títulos/corporativo) + Tahoma (secundaria,
+     apoyo/digital). No hay archivo de fuente Tahoma licenciado disponible:
+     se referencia como system font con fallback a Verdana (ver project_state.md). */
+  --font-primary: 'Lato', sans-serif;
+  --font-secondary: Tahoma, Verdana, sans-serif;
+
+  /* Espaciado — grid de 12 columnas, 1280px max */
+  --container-max: 1280px;
+  --gutter: 32px;
+  --margin-desktop: 64px;
+  --margin-mobile: 24px;
+  --stack-lg: 80px;
+  --stack-md: 48px;
+  --stack-sm: 24px;
+
+  /* Radios — forma "soft" del brandbook */
+  --radius-sm: 0.125rem;
+  --radius-default: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  /* Elevación — sombras ambientales con tinte Forest Green, nunca duras */
+  --shadow-ambient: 0 12px 32px -8px rgb(43 57 41 / 12%);
+  --shadow-ambient-sm: 0 4px 12px -4px rgb(43 57 41 / 10%);
+
+  /* Motion */
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+}

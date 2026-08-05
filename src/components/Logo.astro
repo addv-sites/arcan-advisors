@@ -1,0 +1,96 @@
+---
+/*
+  Isólogo reconstruido en SVG a partir de la guía de construcción
+  ("02. nuestra marcar", pág. de construcción del isólogo) del Brand Book
+  Arcan Advisors v1.0. Geometría best-effort: no existe archivo vectorial
+  fuente (.ai/.eps/.svg) en el material entregado, solo capturas de slide.
+  Validar contra el vectorial original si el diseñador lo entrega — ver
+  project_state.md, sección "Gaps de asset".
+
+  variant: 'principal' (fondo claro) | 'negativa' (fondo oscuro) | 'mono' (fondo de color sólido)
+  markOnly: true = solo isotipo, sin wordmark (uso secundario permitido por brandbook)
+*/
+interface Props {
+  variant?: 'principal' | 'negativa' | 'mono';
+  markOnly?: boolean;
+  class?: string;
+}
+
+const { variant = 'principal', markOnly = false, class: className = '' } = Astro.props;
+
+const markColor = variant === 'mono' ? 'currentColor' : 'var(--color-gold)';
+const arcanColor =
+  variant === 'principal' ? 'var(--color-forest-green)' : variant === 'negativa' ? 'var(--color-white)' : 'currentColor';
+const advisorsColor = variant === 'mono' ? 'currentColor' : 'var(--color-gold)';
+const taglineColor =
+  variant === 'principal' ? 'var(--color-medium-gray)' : variant === 'negativa' ? 'var(--color-light-gray)' : 'currentColor';
+---
+
+<span class={`logo logo--${variant} ${className}`} style={variant === 'mono' ? 'color: var(--color-white)' : ''}>
+  <svg
+    class="logo-mark"
+    viewBox="0 0 140 100"
+    role="img"
+    aria-label="Arcan Advisors"
+    width={markOnly ? '40' : '32'}
+    height={markOnly ? '28' : '23'}
+  >
+    <polygon points="18,90 38,90 62,10 52,10" fill={markColor} />
+    <polygon points="58,90 78,90 102,10 92,10" fill={markColor} />
+    <polygon points="86,90 106,90 106,52 92,52" fill={markColor} />
+  </svg>
+  {
+    !markOnly && (
+      <span class="logo-wordmark">
+        <span class="logo-arcan" style={`color:${arcanColor}`}>
+          ARCAN
+        </span>
+        <span class="logo-advisors" style={`color:${advisorsColor}`}>
+          ADVISORS
+        </span>
+        <span class="logo-tagline" style={`color:${taglineColor}`}>
+          INTELIGENCIA ENERGÉTICA
+        </span>
+      </span>
+    )
+  }
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo-mark {
+    flex-shrink: 0;
+  }
+
+  .logo-wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    font-family: var(--font-primary);
+  }
+
+  .logo-arcan {
+    font-size: 1.05rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+  }
+
+  .logo-advisors {
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin-top: 0.1rem;
+  }
+
+  .logo-tagline {
+    font-size: 0.42rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    margin-top: 0.15rem;
+  }
+</style>
