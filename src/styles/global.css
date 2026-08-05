@@ -104,7 +104,9 @@ html.reveal-ready [data-reveal-group] > * {
 
 .btn-primary {
   background: var(--color-gold);
-  color: var(--color-forest-green);
+  /* Charcoal, no Forest Green: Forest Green sobre Gold da 4.09:1, no pasa
+     AA para texto normal (min 4.5:1). Charcoal sobre Gold da 5.83:1. */
+  color: var(--color-charcoal);
 }
 
 .btn-primary:hover,
@@ -150,7 +152,10 @@ html.reveal-ready [data-reveal-group] > * {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-gold);
+  /* Forest Green, no Gold: Gold sobre fondos claros da 2.98:1, no pasa AA.
+     Gold queda para superficies grandes/iconos/texto grande (hero), donde
+     el umbral no-texto/large-text de 3:1 sí lo permite. */
+  color: var(--color-forest-green);
   margin: 0 0 0.75rem;
 }
 
@@ -160,6 +165,10 @@ html.reveal-ready [data-reveal-group] > * {
 }
 
 .section--dark .section-title {
+  color: var(--color-white);
+}
+
+.section--dark .section-eyebrow {
   color: var(--color-white);
 }
 
@@ -270,7 +279,7 @@ html.reveal-ready [data-reveal-group] > * {
   font-family: var(--font-primary);
   font-weight: 900;
   font-size: 0.85rem;
-  color: var(--color-gold);
+  color: var(--color-forest-green);
   letter-spacing: 0.05em;
 }
 

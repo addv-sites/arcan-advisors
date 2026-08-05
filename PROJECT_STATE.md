@@ -1,6 +1,6 @@
 # Estado del proyecto — Arcan Advisors
 
-Última actualización: 2026-08-05 (cierre Fase 4)
+Última actualización: 2026-08-05 (cierre Fase 5)
 
 **Nota de identidad:** este proyecto es el sitio del cliente **Arcan Advisors**. No tiene relación con "ADDV" (agencia propia de quien lo desarrolla) — ninguna referencia a ADDV debe aparecer en el sitio.
 
@@ -20,7 +20,7 @@ Sitio corporativo estático para **Arcan Advisors** (consultora en inteligencia 
 | 2 — Nav + Hero (Inicio) | ✅ Completada 2026-08-05 | Nav sticky glassmórfico (IntersectionObserver, menú móvil accesible), Hero con patrón "red de energía", copy literal de MockUp + lámina 04, animación emergente on-scroll (`data-reveal`, progressive enhancement). Build OK. |
 | 3 — Nosotros / Servicios / Producto | ✅ Completada 2026-08-05 | Nosotros (Esencia de marca + Propósito/Misión/Visión + 5 Valores, lit. lámina 02 y 04), Servicios (4 líneas completas con bullets, lit. lámina 05), Producto (ARCAN Intelligence™, lit. servicio 04 + disclaimer de posicionamiento del cliente). Build OK, copy verificado en `dist/index.html`. |
 | 4 — Contacto, WhatsApp form, SEO técnico | ✅ Completada 2026-08-05 | Form con validación cliente → WhatsApp (no pierde datos si falla validación), footer, botón flotante WhatsApp, favicons/OG image reales (generados desde el isólogo con `scripts/generate-icons.mjs` + sharp), JSON-LD Organization+ProfessionalService+ContactPoint, robots.txt, sitemap.xml, manifest.webmanifest. Build OK, paths base-aware verificados en `dist/`. |
-| 5 — Accesibilidad, performance, verificación | ⏳ Pendiente | WCAG 2.2 AA, Lighthouse, build real |
+| 5 — Accesibilidad, performance, verificación | ✅ Completada 2026-08-05 | Ver detalle abajo ("Auditoría Fase 5"). Build OK, `npm audit` en 0 vulnerabilidades. |
 | 6 — Prompts de imágenes + mapeo de carpetas | ⏳ Pendiente | Para assets que no se pueden generar directamente |
 
 **2026-08-05:** usuario autorizó terminar todas las fases restantes seguidas, sin pausar a pedir confirmación por fase, y hacer commit+push al cerrar cada una. Sigue vigente la regla de no incluir nada no pedido/inventado.
@@ -37,6 +37,30 @@ Sitio corporativo estático para **Arcan Advisors** (consultora en inteligencia 
 - Tipografía: Lato (principal) + Tahoma con fallback `Verdana, sans-serif` (sin archivo de fuente licenciado disponible).
 - No push a GitHub sin permiso explícito, cada vez.
 - Nosotros (Fase 3) no incluye los "5 pilares estratégicos" (Entendemos/Analizamos/Diseñamos/Transformamos, lámina 04) ni repite la cita de propuesta de valor ya usada en el Hero — decisión de curaduría para bajar carga cognitiva, no alteración de copy (esos bloques siguen disponibles en el brandbook si se piden después).
+
+## Auditoría Fase 5 (2026-08-05)
+
+**Contraste (WCAG AA, calculado real, no estimado):**
+- Gold (#af932f) sobre fondos claros daba 2.98:1 en texto chico (eyebrows, `.card-number`) — no pasa el mínimo 4.5:1. Se cambiaron esos textos a Forest Green (12.21:1) en fondos claros y a White en fondos oscuros. Gold se conserva sin tocar el hex — solo se dejó de usar como color de texto chico, sigue usándose en fondos/bordes/íconos/el acento grande del H1 (ahí sí pasa, 4.09:1 ≥ 3:1 de "large text").
+- Botones primarios (Forest Green sobre Gold) daban 4.09:1, no pasa texto normal — texto cambiado a Charcoal (5.83:1).
+- Footer (Medium Gray sobre Charcoal) daba 3.03:1 — cambiado a Light Gray (13.82:1).
+- `Producto.astro`: se sacó un `opacity: 0.8` que arriesgaba bajar el contraste del texto legal por debajo de AA.
+- Nada de esto cambió ningún valor hex de la paleta de marca — solo dónde se usa cada color como texto.
+
+**Estructura/semántica:**
+- Jerarquía de headings corregida: H1 único (Hero) → H2 por sección → H3 (Misión/Visión/Propósito, valor de servicio, "Información de contacto") → H4 (cada valor). Se agregó el H3 "Nuestros valores" que faltaba antes de la grilla de valores.
+- `aria-hidden="true"` agregado a todos los íconos SVG decorativos que no lo tenían (Nosotros, Servicios).
+- `Logo.astro`: el mark SVG tenía `role="img" aria-label="Arcan Advisors"` fijo, duplicando el anuncio de lector de pantalla cuando el wordmark en texto real ya está visible al lado. Ahora solo lleva `role`/`aria-label` en uso `markOnly` (isotipo solo); si el wordmark está presente, el mark queda `aria-hidden`.
+- Touch targets del menú móvil: los links no tenían padding/alto mínimo — se agregó `padding-block` + `min-height:24px` (WCAG 2.2 SC 2.5.8).
+- `prefers-reduced-motion` ya cubierto de forma global desde Fase 2 — no hizo falta tocar nada por componente.
+
+**Seguridad (`npm audit`):**
+- Estaba en 3 vulnerabilidades (1 low, 2 high) en Astro `<=7.0.9` (XSS/SSRF varios) y `sharp <0.35.0` (CVEs de libvips). Se subió Astro a `7.1.6` (breaking version, se verificó con build real que no rompió nada — sigue en `output:'static'`, mismo `dist/` estático) y se corrió `npm audit fix` para el resto. **Resultado: 0 vulnerabilidades.**
+
+**Performance:**
+- Payload actual: `index.html` (~33KB) + 1 CSS (~18KB) ≈ 51KB sin comprimir, sin JS de framework, sin imágenes raster todavía (ver gap de fotografía). Muy por debajo de cualquier presupuesto de Core Web Vitals.
+- Fuentes: Lato vía Google Fonts con `preconnect` + `display=swap` (sin bloqueo de render).
+- **No se pudo correr Lighthouse en vivo** — la extensión de Chrome no está conectada en esta sesión. Recomendado: `npm run build && npm run preview` y correr Lighthouse desde Chrome DevTools, o reconectar la extensión para que se corra acá.
 
 ## Gaps de asset pendientes (bloquean fidelidad 100%)
 

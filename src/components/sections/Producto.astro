@@ -60,8 +60,9 @@ const capacidades = [
   .producto-disclaimer {
     font-family: var(--font-secondary);
     font-size: 0.85rem;
+    /* Sin opacity reducida: bajarla mezcla el color con el fondo oscuro y
+       puede tirar el contraste por debajo de 4.5:1 AA. */
     color: var(--color-light-gray);
-    opacity: 0.8;
     margin-top: 1.5rem;
     padding-top: 1.5rem;
     border-top: 1px solid rgb(255 255 255 / 15%);

@@ -30,8 +30,9 @@ const taglineColor =
   <svg
     class="logo-mark"
     viewBox="0 0 140 100"
-    role="img"
-    aria-label="Arcan Advisors"
+    role={markOnly ? 'img' : undefined}
+    aria-label={markOnly ? 'Arcan Advisors' : undefined}
+    aria-hidden={markOnly ? undefined : 'true'}
     width={markOnly ? '40' : '32'}
     height={markOnly ? '28' : '23'}
   >

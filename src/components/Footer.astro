@@ -61,7 +61,9 @@ const links = [
   .footer-brand p {
     font-family: var(--font-secondary);
     font-size: 0.9rem;
-    color: var(--color-medium-gray);
+    /* Light Gray, no Medium Gray: Medium Gray sobre Charcoal da 3.03:1, no
+       pasa AA (min 4.5:1). Light Gray sobre Charcoal da 13.82:1. */
+    color: var(--color-light-gray);
     margin-top: 1rem;
     max-width: 28rem;
   }
@@ -96,7 +98,7 @@ const links = [
   .footer-bottom p {
     font-family: var(--font-secondary);
     font-size: 0.8rem;
-    color: var(--color-medium-gray);
+    color: var(--color-light-gray);
     margin: 0;
   }
 </style>

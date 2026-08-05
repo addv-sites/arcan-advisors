@@ -38,6 +38,8 @@ No hay `npm test` ni Docker en este proyecto — no los propongas ni los asumas.
 4. **No `git push` sin permiso explícito**, cada vez.
 5. **`PROJECT_STATE.md` y este archivo se actualizan al cerrar cada fase** — no esperar al final del proyecto.
 6. **`npm run build` real antes de reportar una fase como terminada** — no alcanza con que el dev server funcione.
+7. **`npm audit` en 0 vulnerabilidades antes de cerrar una fase de verificación.** Astro está fijado en `^7.1.6` (subido desde 5.x en Fase 5 por 2 CVEs high) — no bajar la versión sin volver a auditar.
+8. **Colores de marca no se tocan, pero dónde se usan como texto sí importa.** Gold (`#af932f`) falla AA como texto chico sobre fondos claros (2.98:1) — usarlo solo en fondos/bordes/íconos/texto grande (≥24px), nunca en labels/eyebrows chicos sobre blanco. Ver auditoría de contraste completa en `PROJECT_STATE.md`.
 
 ## Dónde está la fuente de verdad de marca
 

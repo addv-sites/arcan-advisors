@@ -72,11 +72,12 @@ const valores = [
       ))}
     </div>
 
+    <h3 class="valores-title" data-reveal>Nuestros valores</h3>
     <div class="valores" data-reveal-group>
       {valores.map((valor, i) => (
         <div class="valor-item" data-reveal style={`--reveal-index:${i}`}>
           <span class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d={valor.icon} />
             </svg>
           </span>
@@ -91,8 +92,14 @@ const valores = [
 </section>
 
 <style>
-  .valores {
+  .valores-title {
     margin-top: var(--stack-lg);
+    font-size: 1.1rem;
+    color: var(--color-primary);
+  }
+
+  .valores {
+    margin-top: 1.5rem;
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.75rem;
