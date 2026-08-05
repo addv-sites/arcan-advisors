@@ -20,7 +20,15 @@ No hay `npm test` ni Docker en este proyecto — no los propongas ni los asumas.
 - `src/styles/global.css` — reset + utilidades base, importa `tokens.css`.
 - `src/components/Logo.astro` — isólogo con 3 variantes (`principal` | `negativa` | `mono`) vía prop `variant`, y prop `markOnly` para isotipo solo. Es una reconstrucción SVG best-effort (sin vectorial fuente disponible) — ver gap en `PROJECT_STATE.md`.
 - `src/data/site.js` — contacto real (email, WhatsApp, dirección) + `getWhatsAppLink()` para el formulario de contacto (sin backend, arma mensaje y abre WhatsApp).
-- `src/layouts/BaseLayout.astro` — head base (Lato vía Google Fonts, meta viewport, skip link). SEO completo (JSON-LD, OG, sitemap) llega en Fase 4.
+- `src/layouts/BaseLayout.astro` — head base (Lato vía Google Fonts, meta viewport, skip link), importa `src/scripts/reveal.js`. SEO completo (JSON-LD, OG, sitemap) llega en Fase 4.
+- `src/scripts/reveal.js` — animación emergente on-scroll vía `IntersectionObserver` sobre `[data-reveal]`. Progressive enhancement: el CSS solo oculta esos elementos si `<html>` tiene `.reveal-ready` (la agrega el propio script) — si el JS falla, el contenido queda visible por default.
+- `src/components/Nav.astro` — sticky, glassmórfico al hacer scroll (clase `.is-scrolled` vía IntersectionObserver sobre un sentinel), 5 secciones, menú móvil accesible (`aria-expanded`, cierre con Escape).
+- `src/components/sections/` — `Hero.astro`, `Nosotros.astro`, `Servicios.astro`, `Producto.astro`, `Contacto.astro`. Patrones compartidos (`.section`, `.cards-grid`, `.card`, `.banner`) viven en `global.css`, no se duplican por componente.
+- `src/components/Footer.astro`, `src/components/WhatsAppFloat.astro` — footer y botón flotante, ambos fuera de `<main>` en `src/pages/index.astro`.
+- `src/components/sections/Contacto.astro` — formulario sin backend, valida en cliente y arma el link de `getWhatsAppLink()` (`src/data/site.js`) al enviar. No navega ni limpia el form si falla validación — el usuario nunca pierde lo que escribió.
+- `scripts/generate-icons.mjs` — genera favicons/apple-touch-icon/manifest icons/`og-image.png` reales (rasteriza el isólogo con `sharp`, ya en `node_modules` como dependencia de Astro). Correr `node scripts/generate-icons.mjs` de nuevo si el logo cambia.
+- `src/layouts/BaseLayout.astro` — SEO completo: canonical, OG/Twitter, JSON-LD (Organization+ProfessionalService+ContactPoint) armado desde `SITE` (`src/data/site.js`), icons/manifest linkeados con `import.meta.env.BASE_URL` (nunca hardcodear `/algo`, ver regla 2).
+- `public/robots.txt`, `public/sitemap.xml`, `public/manifest.webmanifest` — estáticos, no procesados por Astro. Tienen el `base` actual (`/arcan-prototipo/`) hardcodeado — ver lista de "4 lugares" en `PROJECT_STATE.md` para la fase post-aprobación de dominio.
 
 ## Reglas del protocolo (no negociables en este repo)
 

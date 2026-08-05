@@ -1,0 +1,221 @@
+---
+import Logo from './Logo.astro';
+
+const links = [
+  { href: '#top', label: 'Inicio' },
+  { href: '#nosotros', label: 'Nosotros' },
+  { href: '#servicios', label: 'Servicios' },
+  { href: '#producto', label: 'Producto' },
+  { href: '#contacto', label: 'Contacto' },
+];
+---
+
+<header class="site-nav" id="site-nav">
+  <div id="nav-sentinel" aria-hidden="true"></div>
+  <div class="container nav-inner">
+    <a href="#top" class="nav-logo" aria-label="Arcan Advisors — inicio">
+      <Logo variant="negativa" />
+    </a>
+
+    <nav class="nav-links" aria-label="Navegación principal">
+      {links.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+    </nav>
+
+    <a class="btn btn-primary nav-cta" href="#contacto">Contáctanos</a>
+
+    <button
+      type="button"
+      class="nav-toggle"
+      id="nav-toggle"
+      aria-expanded="false"
+      aria-controls="nav-mobile-menu"
+      aria-label="Abrir menú de navegación"
+    >
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+  </div>
+
+  <nav class="nav-mobile-menu" id="nav-mobile-menu" aria-label="Navegación móvil" hidden>
+    {links.map((link) => (
+      <a href={link.href}>{link.label}</a>
+    ))}
+    <a class="btn btn-primary" href="#contacto">Contáctanos</a>
+  </nav>
+</header>
+
+<style>
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-forest-green);
+    transition: background-color var(--duration-base) var(--ease-premium), backdrop-filter var(--duration-base) var(--ease-premium);
+  }
+
+  .site-nav.is-scrolled {
+    background: color-mix(in srgb, var(--color-forest-green) 82%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgb(255 255 255 / 10%);
+  }
+
+  #nav-sentinel {
+    position: absolute;
+    top: 0;
+    height: 1px;
+    width: 1px;
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1rem;
+  }
+
+  .nav-logo {
+    text-decoration: none;
+    display: inline-flex;
+  }
+
+  .nav-links {
+    display: none;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .nav-links a {
+    color: var(--color-white);
+    text-decoration: none;
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    padding-block: 0.25rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--duration-base) var(--ease-premium), opacity var(--duration-base) var(--ease-premium);
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible {
+    border-color: var(--color-gold);
+  }
+
+  .nav-cta {
+    display: none;
+    padding: 0.6rem 1.35rem;
+    font-size: 0.85rem;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .nav-toggle-bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--color-white);
+    transition: transform var(--duration-base) var(--ease-premium), opacity var(--duration-base) var(--ease-premium);
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle[aria-expanded='true'] .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav-mobile-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.5rem var(--margin-mobile) 2rem;
+    background: var(--color-forest-green);
+    border-top: 1px solid rgb(255 255 255 / 10%);
+  }
+
+  .nav-mobile-menu a {
+    color: var(--color-white);
+    text-decoration: none;
+    font-family: var(--font-secondary);
+    font-size: 1rem;
+  }
+
+  .nav-mobile-menu .btn {
+    align-self: flex-start;
+  }
+
+  @media (min-width: 1024px) {
+    .nav-links,
+    .nav-cta {
+      display: inline-flex;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-mobile-menu');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Abrir menú de navegación' : 'Cerrar menú de navegación');
+      menu.hidden = isOpen;
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú de navegación');
+        menu.hidden = true;
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú de navegación');
+        menu.hidden = true;
+        toggle.focus();
+      }
+    });
+  }
+
+  const nav = document.getElementById('site-nav');
+  const sentinel = document.getElementById('nav-sentinel');
+
+  if (nav && sentinel) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        nav.classList.toggle('is-scrolled', !entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    observer.observe(sentinel);
+  }
+</script>

@@ -71,7 +71,10 @@ const taglineColor =
     display: flex;
     flex-direction: column;
     line-height: 1;
-    font-family: var(--font-primary);
+    /* El lockup real del logo usa un serif (ver brandbook lám. 02/06), distinto
+       de Lato (tipografía corporativa para el resto del sitio) — el logo es
+       arte fijo, no se "corrige" a la tipografía corporativa. */
+    font-family: Georgia, 'Times New Roman', serif;
   }
 
   .logo-arcan {
@@ -88,6 +91,7 @@ const taglineColor =
   }
 
   .logo-tagline {
+    font-family: var(--font-secondary);
     font-size: 0.42rem;
     font-weight: 400;
     letter-spacing: 0.14em;

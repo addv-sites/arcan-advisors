@@ -1,50 +1,27 @@
 ---
-// Página temporal de verificación de Fase 1 (tokens + logo).
-// Se reemplaza por completo en Fase 2 (Nav + Hero real).
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Logo from '../components/Logo.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import Hero from '../components/sections/Hero.astro';
+import Nosotros from '../components/sections/Nosotros.astro';
+import Servicios from '../components/sections/Servicios.astro';
+import Producto from '../components/sections/Producto.astro';
+import Contacto from '../components/sections/Contacto.astro';
 ---
 
-<BaseLayout title="Arcan Advisors — Fase 1 (verificación interna)" description="Verificación interna de tokens de marca y logo.">
-  <main id="main" style="padding: 2rem; display: grid; gap: 2rem;">
-    <section style="padding: 2rem; background: var(--color-surface); border: 1px solid var(--color-light-gray);">
-      <p style="font-family: var(--font-secondary); margin-bottom: 1rem;">Versión principal (fondo claro)</p>
-      <Logo variant="principal" />
-    </section>
-
-    <section style="padding: 2rem; background: var(--color-forest-green);">
-      <p style="font-family: var(--font-secondary); color: var(--color-light-gray); margin-bottom: 1rem;">Versión negativa (fondo oscuro)</p>
-      <Logo variant="negativa" />
-    </section>
-
-    <section style="padding: 2rem; background: var(--color-gold);">
-      <p style="font-family: var(--font-secondary); color: var(--color-white); margin-bottom: 1rem;">Versión monocromática (fondo de color)</p>
-      <Logo variant="mono" />
-    </section>
-
-    <section style="padding: 2rem; background: var(--color-surface); border: 1px solid var(--color-light-gray);">
-      <p style="font-family: var(--font-secondary); margin-bottom: 1rem;">Isotipo solo (uso secundario)</p>
-      <Logo variant="principal" markOnly />
-    </section>
-
-    <section style="padding: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-      {
-        [
-          ['--color-forest-green', 'Forest Green'],
-          ['--color-dark-olive', 'Dark Olive'],
-          ['--color-sage-green', 'Sage Green'],
-          ['--color-gold', 'Gold'],
-          ['--color-brick-red', 'Brick Red'],
-          ['--color-charcoal', 'Charcoal'],
-          ['--color-medium-gray', 'Medium Gray'],
-          ['--color-light-gray', 'Light Gray'],
-        ].map(([varName, label]) => (
-          <div style="width: 120px;">
-            <div style={`height:60px; background:var(${varName}); border:1px solid #ccc;`} />
-            <p style="font-family: var(--font-secondary); font-size: 0.75rem;">{label}</p>
-          </div>
-        ))
-      }
-    </section>
+<BaseLayout
+  title="Arcan Advisors — Inteligencia Energética"
+  description="Consultoría estratégica para la transición energética en México y Latinoamérica. Asesoría en licitaciones, formación de mercado eléctrico, productos ambientales y consultoría estratégica con ARCAN Intelligence™."
+>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <Nosotros />
+    <Servicios />
+    <Producto />
+    <Contacto />
   </main>
+  <Footer />
+  <WhatsAppFloat />
 </BaseLayout>

@@ -1,0 +1,283 @@
+---
+import { SITE } from '../../data/site.js';
+
+const servicios = [
+  'Asesoría en Licitaciones Energéticas',
+  'Formación en Mercado Eléctrico Mayorista',
+  'Comercialización de Productos Ambientales',
+  'Consultoría Estratégica en Energía',
+  'Otro',
+];
+
+const mapsQuery = encodeURIComponent(
+  `${SITE.address.street}, ${SITE.address.neighborhood}, ${SITE.address.city}, ${SITE.address.zip}, ${SITE.address.country}`
+);
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+---
+
+<section class="section" id="contacto">
+  <div class="container contacto-grid">
+    <div>
+      <div class="section-header" data-reveal>
+        <p class="section-eyebrow">Contacto</p>
+        <h2 class="section-title">Hablemos de tu proyecto</h2>
+        <p class="section-lead">
+          Escribinos y armamos el mensaje por vos — se abre WhatsApp con todo prellenado, listo para enviar.
+        </p>
+      </div>
+
+      <form id="contact-form" class="contact-form" data-reveal novalidate>
+        <div class="field">
+          <label for="nombre">Nombre <span aria-hidden="true">*</span></label>
+          <input type="text" id="nombre" name="nombre" required autocomplete="name" />
+          <p class="field-error" id="error-nombre" role="alert"></p>
+        </div>
+
+        <div class="field">
+          <label for="empresa">Empresa</label>
+          <input type="text" id="empresa" name="empresa" autocomplete="organization" />
+        </div>
+
+        <div class="field">
+          <label for="correo">Correo <span aria-hidden="true">*</span></label>
+          <input type="email" id="correo" name="correo" required autocomplete="email" />
+          <p class="field-error" id="error-correo" role="alert"></p>
+        </div>
+
+        <div class="field">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" autocomplete="tel" />
+        </div>
+
+        <div class="field field-full">
+          <label for="servicio">Servicio de interés <span aria-hidden="true">*</span></label>
+          <select id="servicio" name="servicio" required>
+            <option value="" selected disabled>Seleccioná una opción</option>
+            {servicios.map((s) => (
+              <option value={s}>{s}</option>
+            ))}
+          </select>
+          <p class="field-error" id="error-servicio" role="alert"></p>
+        </div>
+
+        <div class="field field-full">
+          <label for="mensaje">Mensaje <span aria-hidden="true">*</span></label>
+          <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+          <p class="field-error" id="error-mensaje" role="alert"></p>
+        </div>
+
+        <div class="field-full">
+          <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+
+    <aside class="contact-info" data-reveal>
+      <h3>Información de contacto</h3>
+      <ul>
+        <li>
+          <span class="contact-label">Correo</span>
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        </li>
+        <li>
+          <span class="contact-label">WhatsApp</span>
+          <a href={`https://wa.me/${SITE.whatsapp.replace('+', '')}`} target="_blank" rel="noopener">{SITE.whatsappDisplay}</a>
+        </li>
+        <li>
+          <span class="contact-label">Oficina</span>
+          <address>
+            {SITE.address.street}, {SITE.address.floor}<br />
+            {SITE.address.neighborhood}<br />
+            {SITE.address.city} {SITE.address.zip}, {SITE.address.country}
+          </address>
+        </li>
+      </ul>
+      <a class="btn btn-secondary contact-map-link" href={mapsUrl} target="_blank" rel="noopener">
+        Ver ubicación en el mapa
+      </a>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .contacto-grid {
+    display: grid;
+    gap: var(--stack-lg);
+  }
+
+  @media (min-width: 1024px) {
+    .contacto-grid {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: start;
+    }
+  }
+
+  .contact-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .contact-form {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .field-full {
+    grid-column: 1 / -1;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-family: var(--font-secondary);
+    font-size: 0.85rem;
+    color: var(--color-text);
+    font-weight: 700;
+  }
+
+  input,
+  select,
+  textarea {
+    font-family: var(--font-secondary);
+    font-size: 0.95rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--color-light-gray);
+    border-radius: var(--radius-default);
+    background: var(--color-white);
+    color: var(--color-text);
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 1px;
+    border-color: var(--color-gold);
+  }
+
+  .field-error {
+    color: var(--color-brick-red);
+    font-family: var(--font-secondary);
+    font-size: 0.8rem;
+    margin: 0;
+    min-height: 1em;
+  }
+
+  .form-status {
+    font-family: var(--font-secondary);
+    font-size: 0.9rem;
+    color: var(--color-forest-green);
+    margin-top: 0.75rem;
+  }
+
+  .contact-info {
+    background: var(--color-light-gray);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+  }
+
+  .contact-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-info ul {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .contact-label {
+    display: block;
+    font-family: var(--font-secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.25rem;
+  }
+
+  .contact-info a {
+    font-family: var(--font-secondary);
+    color: var(--color-forest-green);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .contact-info a:hover,
+  .contact-info a:focus-visible {
+    text-decoration: underline;
+  }
+
+  .contact-info address {
+    font-family: var(--font-secondary);
+    font-style: normal;
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  .contact-map-link {
+    width: 100%;
+    color: var(--color-forest-green);
+    border-color: var(--color-forest-green);
+  }
+
+  .contact-map-link:hover,
+  .contact-map-link:focus-visible {
+    background: var(--color-forest-green);
+    color: var(--color-white);
+  }
+</style>
+
+<script>
+  import { getWhatsAppLink } from '../../data/site.js';
+
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('form-status');
+
+  if (form instanceof HTMLFormElement && status) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const data = new FormData(form);
+      const values = {
+        nombre: String(data.get('nombre') || '').trim(),
+        empresa: String(data.get('empresa') || '').trim(),
+        correo: String(data.get('correo') || '').trim(),
+        telefono: String(data.get('telefono') || '').trim(),
+        servicio: String(data.get('servicio') || '').trim(),
+        mensaje: String(data.get('mensaje') || '').trim(),
+      };
+
+      let hasError = false;
+      const setError = (field, message) => {
+        const el = document.getElementById(`error-${field}`);
+        if (el) el.textContent = message;
+        if (message) hasError = true;
+      };
+
+      setError('nombre', values.nombre ? '' : 'Ingresá tu nombre.');
+      setError('correo', /.+@.+\..+/.test(values.correo) ? '' : 'Ingresá un correo válido.');
+      setError('servicio', values.servicio ? '' : 'Elegí un servicio de interés.');
+      setError('mensaje', values.mensaje ? '' : 'Contanos brevemente tu proyecto.');
+
+      if (hasError) {
+        status.textContent = 'Revisá los campos marcados antes de enviar.';
+        return;
+      }
+
+      const link = getWhatsAppLink(values);
+      window.open(link, '_blank', 'noopener');
+      status.textContent = 'Abrimos WhatsApp con tu mensaje listo — confirmá el envío ahí. Tus datos siguen acá por si necesitás corregir algo.';
+    });
+  }
+</script>

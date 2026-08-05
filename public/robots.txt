@@ -1,0 +1,5 @@
+# FASE PRE-APROBACIÓN: al conectar www.arcanadvisors.com, actualizar la URL del Sitemap abajo.
+User-agent: *
+Allow: /
+
+Sitemap: https://antonioprado-sketch.github.io/arcan-prototipo/sitemap.xml
