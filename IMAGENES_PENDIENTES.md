@@ -1,8 +1,6 @@
 # Imágenes pendientes — Fase 6
 
-Fotografía real que falta para terminar de igualar el MockUp (`MockUp site.png`) y el estilo "consultora internacional" del brief. No se generaron acá porque no hay herramienta de generación de imágenes en este entorno ni fotografía licenciada entregada — esto es la lista de qué falta, el prompt para generarlas (ChatGPT/DALL·E) y dónde va cada archivo.
-
-El sitio funciona y se ve bien sin estas imágenes (Hero usa el patrón de marca "red de energía", las cards de Servicios son icon-first) — son una mejora, no un bloqueante.
+**Estado: resuelto 2026-08-05.** Las 5 imágenes (hero + 4 servicios) ya fueron generadas por el usuario con los prompts de abajo y están integradas en el sitio, optimizadas a WebP. Se deja este documento como referencia — sirve si hace falta regenerar alguna a mayor resolución o generar variantes.
 
 ## Cómo integrarlas al agregarlas
 

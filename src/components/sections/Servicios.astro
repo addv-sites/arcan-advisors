@@ -1,5 +1,8 @@
 ---
 // Copy literal — Brand Book Arcan Advisors v1.0, lámina "05. Nuestros Servicios".
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
 const servicios = [
   {
     number: '01',
@@ -13,6 +16,7 @@ const servicios = [
       'Gestión de riesgos y optimización de ofertas',
     ],
     icon: 'M9 3h6v3H9V3Z M6 6h12v15H6V6Z M9 13l2 2 4-4',
+    image: 'servicio-01-licitaciones.webp',
   },
   {
     number: '02',
@@ -20,6 +24,7 @@ const servicios = [
     text: 'Formamos profesionales y empresas con conocimiento práctico y actualizado del mercado eléctrico.',
     items: ['Cursos y talleres especializados', 'Programas in-company', 'Capacitación regulatoria y operativa', 'Análisis de mercado y casos reales'],
     icon: 'M12 3 2 8l10 5 10-5-10-5Z M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5',
+    image: 'servicio-02-formacion.webp',
   },
   {
     number: '03',
@@ -27,6 +32,7 @@ const servicios = [
     text: 'Desarrollamos e intermediamos instrumentos ambientales que impulsan la sostenibilidad y generan valor.',
     items: ['Certificados de Energía Renovable (I-REC)', 'Bonos de carbono', 'Garantías de origen renovable'],
     icon: 'M12 2c4 3 6 6 6 10a6 6 0 1 1-12 0c0-4 2-7 6-10Z',
+    image: 'servicio-03-ambientales.webp',
   },
   {
     number: '04',
@@ -39,8 +45,19 @@ const servicios = [
       'Evaluación de riesgos y oportunidades',
     ],
     icon: 'M12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M19 5l-3 3M8 16l-3 3',
+    image: 'servicio-04-consultoria.webp',
   },
 ];
+
+// Chequeo real de archivo en build time — mientras IMAGENES_PENDIENTES.md
+// no se haya resuelto, cada card cae al placeholder de marca (nunca un
+// <img src> roto). Apenas el archivo exista en public/images/servicios/,
+// esta misma build lo toma solo, sin tocar el componente.
+const imagesDir = fileURLToPath(new URL('../../../public/images/servicios/', import.meta.url));
+const servicesWithImageStatus = servicios.map((s) => ({
+  ...s,
+  hasImage: existsSync(`${imagesDir}${s.image}`),
+}));
 ---
 
 <section class="section section--muted" id="servicios">
@@ -55,21 +72,30 @@ const servicios = [
     </div>
 
     <div class="cards-grid cards-grid--4" data-reveal-group>
-      {servicios.map((s, i) => (
-        <article class="card" data-reveal style={`--reveal-index:${i}`}>
-          <span class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d={s.icon} />
-            </svg>
-          </span>
-          <p class="card-number">{s.number}</p>
-          <h3>{s.title}</h3>
-          <p>{s.text}</p>
-          <ul>
-            {s.items.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
+      {servicesWithImageStatus.map((s, i) => (
+        <article class="card card--media" data-reveal style={`--reveal-index:${i}`}>
+          <div class="card-media">
+            {s.hasImage ? (
+              <img src={`${import.meta.env.BASE_URL}images/servicios/${s.image}`} alt="" loading="lazy" width="400" height="300" />
+            ) : (
+              <span class="card-media-placeholder" aria-hidden="true"></span>
+            )}
+            <span class="card-icon card-icon--overlap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d={s.icon} />
+              </svg>
+            </span>
+          </div>
+          <div class="card-body">
+            <p class="card-number">{s.number}</p>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <ul>
+              {s.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
         </article>
       ))}
     </div>
@@ -83,3 +109,46 @@ const servicios = [
     </div>
   </div>
 </section>
+
+<style>
+  .card--media {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .card-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(160deg, var(--color-forest-green) 0%, var(--color-dark-olive) 100%);
+  }
+
+  .card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-media-placeholder {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 20%, rgb(175 147 47 / 25%) 0%, transparent 45%),
+      radial-gradient(circle at 80% 70%, rgb(175 147 47 / 18%) 0%, transparent 50%);
+  }
+
+  .card-icon--overlap {
+    position: absolute;
+    left: 1.25rem;
+    bottom: -22px;
+    background: var(--color-charcoal);
+    color: var(--color-gold);
+    box-shadow: var(--shadow-ambient);
+  }
+
+  .card-body {
+    padding: 2rem 1.75rem 1.75rem;
+  }
+
+  .card-body .card-number {
+    margin-top: 0.5rem;
+  }
+</style>

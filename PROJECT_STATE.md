@@ -1,6 +1,18 @@
 # Estado del proyecto — Arcan Advisors
 
-Última actualización: 2026-08-05 (cierre Fase 6 — todas las fases planeadas completas)
+Última actualización: 2026-08-05 (fotografía real integrada + fidelidad al MockUp)
+
+## Post-fase 6: fotografía real + gaps de fidelidad al MockUp (2026-08-05)
+
+Usuario comparó el sitio contra `MockUp site.png` y marcó que no coincidía. Se corrigieron 3 gaps estructurales y se integró la fotografía real que el usuario generó con los prompts de `IMAGENES_PENDIENTES.md`:
+
+1. **Hero**: foto real (turbinas/paneles al amanecer, `public/images/hero/hero-energia.webp`) como fondo, con overlay más fuerte del lado del texto (antes era gradiente de marca sin foto). `Hero.astro` usa `existsSync` en build-time — si el archivo no está, cae a fondo sin foto, nunca un `<img>` roto.
+2. **Servicios**: cards ahora llevan foto arriba + ícono superpuesto (estilo mockup), con el mismo patrón de `existsSync` — 4 fotos ya puestas en `public/images/servicios/`.
+3. **Footer**: 4 columnas (Marca / Enlaces / Servicios / Contacto) en vez de 2 — nombres de servicio reales, sin inventar íconos sociales (no hay URLs reales).
+
+**Imágenes que llegaron:** el usuario las generó con los prompts del doc y las soltó directo en las carpetas. Llegaron como PNG pesados (1.9-2.8MB c/u, algunos con doble extensión `.jpg.png`) — se optimizaron a WebP (~80-145KB c/u, ~20x más chicas) antes de integrarlas; los originales pesados no se commitean.
+
+**Bug encontrado en el proceso — dev server con CSS viejo en caché:** después de editar `Footer.astro`, el dev server (Vite/Astro) seguía sirviendo el CSS de ANTES del cambio (`.footer-links` en vez de `.footer-col`) incluso en pestañas nuevas — confirmado con `getComputedStyle` en el navegador. El build de producción (`dist/`) siempre tuvo el CSS correcto — era puramente un problema de caché del dev server. Se resolvió matando el proceso viejo y arrancando uno nuevo. **Si algo se ve raro en `npm run dev` después de editar estilos y el build sí está bien, reiniciar el dev server antes de asumir que es un bug real.**
 
 **Nota de identidad:** este proyecto es el sitio del cliente **Arcan Advisors**. No tiene relación con "ADDV" (agencia propia de quien lo desarrolla) — ninguna referencia a ADDV debe aparecer en el sitio.
 
@@ -66,7 +78,7 @@ Sitio corporativo estático para **Arcan Advisors** (consultora en inteligencia 
 
 1. **Logo vectorial**: no existe `.ai`/`.eps`/`.svg` fuente en el material entregado, solo capturas de slide. `src/components/Logo.astro` es una reconstrucción best-effort en SVG (geometría de 3 polígonos). Reemplazar si el diseñador entrega el vectorial original.
 2. **Fuente Tahoma**: sin archivo licenciado. Implementado como font-stack de sistema, no embebido.
-3. **Fotografía real** de servicios/hero: prompts + rutas de destino listos en `IMAGENES_PENDIENTES.md` (Fase 6). El sitio funciona y se ve terminado sin ellas (Hero usa el patrón de marca, Servicios es icon-first) — es mejora, no bloqueante, salvo que el usuario prefiera proveer fotografía propia.
+3. ~~**Fotografía real** de servicios/hero~~ — **resuelto 2026-08-05**. Las 5 imágenes (hero + 4 servicios) ya están integradas y optimizadas a WebP.
 
 ## Todas las fases planeadas (1-6) completas — 2026-08-05
 

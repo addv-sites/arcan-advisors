@@ -29,6 +29,7 @@ No hay `npm test` ni Docker en este proyecto — no los propongas ni los asumas.
 - `scripts/generate-icons.mjs` — genera favicons/apple-touch-icon/manifest icons/`og-image.png` reales (rasteriza el isólogo con `sharp`, ya en `node_modules` como dependencia de Astro). Correr `node scripts/generate-icons.mjs` de nuevo si el logo cambia.
 - `src/layouts/BaseLayout.astro` — SEO completo: canonical, OG/Twitter, JSON-LD (Organization+ProfessionalService+ContactPoint) armado desde `SITE` (`src/data/site.js`), icons/manifest linkeados con `import.meta.env.BASE_URL` (nunca hardcodear `/algo`, ver regla 2).
 - `public/robots.txt`, `public/sitemap.xml`, `public/manifest.webmanifest` — estáticos, no procesados por Astro. Tienen el `base` actual (`/arcan-prototipo/`) hardcodeado — ver lista de "4 lugares" en `PROJECT_STATE.md` para la fase post-aprobación de dominio.
+- **Patrón de imagen opcional (Hero, Servicios):** el componente chequea `existsSync` en build-time sobre `public/images/.../archivo.webp` — si existe, `<img>` real; si no, fondo/placeholder de marca. Nunca un `<img src>` apuntando a un archivo que no existe. Al agregar una imagen nueva: **optimizarla primero** (WebP, `sharp`, ver `scripts/generate-icons.mjs` como referencia) — las que llegan del cliente pueden pesar 2-3MB sin comprimir y cuelgan el navegador.
 
 ## Reglas del protocolo (no negociables en este repo)
 

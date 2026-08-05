@@ -2,23 +2,27 @@
 /*
   Copy literal de MockUp site.png (headline/subtext/badges), cross-validado
   contra "04. Estrategia de Marca" del brandbook (misma cita textual en
-  "Nuestra propuesta de valor"). Fondo: Forest Green + patrón "Red de
-  Energía" (motivo de marca real, lámina "03. Sistema Visual").
-
-  TODO-IMG: falta la fotografía real (paneles/turbinas al amanecer) que el
-  MockUp usa como fondo del hero, con overlay Forest Green 40% — no hay
-  asset licenciado disponible todavía. Se genera el prompt de reemplazo en
-  Fase 6 y se agrega como <img>/background-image detrás de .hero-pattern
-  sin tocar el resto del markup.
+  "Nuestra propuesta de valor"). Fondo: fotografía real (turbinas/paneles al
+  amanecer, ver IMAGENES_PENDIENTES.md) + overlay Forest Green + patrón
+  "Red de Energía" (motivo de marca real, lámina "03. Sistema Visual").
 */
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
 const badges = [
   { label: 'Experiencia comprobada' },
   { label: 'Visión sostenible' },
   { label: 'Compromiso con resultados' },
 ];
+
+const heroImageFile = 'hero-energia.webp';
+const heroImagePath = fileURLToPath(new URL('../../../public/images/hero/', import.meta.url));
+const hasHeroImage = existsSync(`${heroImagePath}${heroImageFile}`);
+const heroImageSrc = `${import.meta.env.BASE_URL}images/hero/${heroImageFile}`;
 ---
 
 <section class="hero" id="top">
+  {hasHeroImage && <img class="hero-photo" src={heroImageSrc} alt="" loading="eager" fetchpriority="high" width="1920" height="1081" />}
   <svg class="hero-pattern" viewBox="0 0 800 500" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
     <g stroke="var(--color-gold)" stroke-width="1" opacity="0.35">
       <line x1="40" y1="80" x2="220" y2="160"></line>
@@ -80,6 +84,14 @@ const badges = [
     align-items: center;
   }
 
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .hero-pattern {
     position: absolute;
     inset: 0;
@@ -90,7 +102,15 @@ const badges = [
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 20% 30%, rgb(43 57 41 / 0%) 0%, rgb(26 26 26 / 55%) 100%);
+    /* Con foto real de fondo, el texto queda sobre el lado izquierdo —
+       oscurecer fuerte ahí y dejar la foto respirar a la derecha. */
+    background: linear-gradient(
+      100deg,
+      rgb(26 26 26 / 82%) 0%,
+      rgb(26 26 26 / 68%) 35%,
+      rgb(43 57 41 / 35%) 65%,
+      rgb(43 57 41 / 15%) 100%
+    );
   }
 
   .hero-content {
