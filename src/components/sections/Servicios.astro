@@ -126,6 +126,11 @@ const servicesWithImageStatus = servicios.map((s, i) => ({
      con divisor dorado, tal cual el MockUp. */
   .services-header {
     display: block;
+    /* .section-header (global.css) trae max-width:42rem — pensado para
+       headers de una sola columna. Acá angostaba el bloque completo
+       mientras las cards de abajo usan el ancho completo del container,
+       dejando un vacío enorme a la derecha del lead. */
+    max-width: none;
   }
 
   @media (min-width: 900px) {
@@ -150,6 +155,12 @@ const servicesWithImageStatus = servicios.map((s, i) => ({
     .services-lead {
       margin-top: 0;
     }
+  }
+
+  /* .section padding-block (global.css) es 80px arriba/abajo — dejaba
+     demasiado aire antes del eyebrow comparado con el MockUp. */
+  #servicios {
+    padding-top: 48px;
   }
 
   /* Línea dorada corta bajo el eyebrow, tal cual el MockUp. */
