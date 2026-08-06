@@ -51,7 +51,9 @@ const serviceLinks = [
 <footer class="site-footer">
   <div class="container footer-inner">
     <div class="footer-brand">
-      <Logo variant="negativa" />
+      <div class="footer-logo-wrap">
+        <Logo variant="negativa" footer />
+      </div>
       <p>
         Consultoría estratégica para la transición energética en México y Latinoamérica.
       </p>
@@ -163,6 +165,14 @@ const serviceLinks = [
     }
   }
 
+  .footer-logo-wrap {
+    /* La columna del footer-brand es más ancha que el logo — sin esto
+       queda pegado a la izquierda y se ve desbalanceado respecto al resto
+       del bloque. Centrado explícito pedido por el cliente. */
+    display: flex;
+    justify-content: center;
+  }
+
   .footer-brand p {
     font-family: var(--font-secondary);
     font-size: 0.9rem;
@@ -174,7 +184,9 @@ const serviceLinks = [
   .footer-col {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    /* Reducido de 0.75rem → 0.4rem → 0.15rem — seguía muy separado,
+       pedido explícito del cliente. */
+    gap: 0.15rem;
   }
 
   .footer-col-title {
@@ -190,6 +202,9 @@ const serviceLinks = [
     text-decoration: none;
     font-family: var(--font-secondary);
     font-size: 0.9rem;
+    /* Default (~1.5) dejaba mucho aire en los links de 2 líneas
+       ("Formación en Mercado Eléctrico Mayorista", etc). */
+    line-height: 1.25;
   }
 
   .footer-col a:hover,

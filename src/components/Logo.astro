@@ -17,11 +17,17 @@ interface Props {
   variant?: 'principal' | 'negativa' | 'mono';
   markOnly?: boolean;
   class?: string;
+  footer?: boolean;
 }
 
-const { variant = 'principal', markOnly = false, class: className = '' } = Astro.props;
+const { variant = 'principal', markOnly = false, class: className = '', footer = false } = Astro.props;
 
-const realLogoFile = 'logo-arcan-advisors.webp';
+// Footer usa un lockup real distinto (public/logo-footer.webp, derivado de
+// LogoFooter.png que aportó el cliente) — el ARCAN de ese archivo venía en
+// negro (variante fondo claro), se recoloreó a blanco por chroma detection
+// (achromático + oscuro → blanco, dorado intacto) para que sea legible
+// sobre el Forest Green del footer.
+const realLogoFile = footer ? 'logo-footer.webp' : 'logo-arcan-advisors.webp';
 // process.cwd() = raíz del proyecto (donde corre `astro build`), no la
 // ubicación de este componente — import.meta.url-relativo es frágil acá:
 // depende de cómo Vite empaqueta el archivo en build, no del código fuente.
@@ -38,7 +44,13 @@ const taglineColor =
 
 {
   hasRealLogo ? (
-    <img class={`logo-real ${className}`} src={realLogoSrc} alt="Arcan Advisors — Inteligencia Energética" width="168" height="100" />
+    <img
+      class={`logo-real ${footer ? 'logo-real--footer' : ''} ${className}`}
+      src={realLogoSrc}
+      alt="Arcan Advisors — Inteligencia Energética"
+      width={footer ? '558' : '1582'}
+      height={footer ? '555' : '489'}
+    />
   ) : (
     <span class={`logo logo--${variant} ${className}`} style={variant === 'mono' ? 'color: var(--color-white)' : ''}>
       <svg
@@ -74,10 +86,21 @@ const taglineColor =
 <style>
   .logo-real {
     width: auto;
-    /* 34px se veía chico contra los links del nav — la proporción real del
-       lockup es más ancha que alta, necesita más altura para leerse bien. */
-    height: 52px;
+    /* Reducido 45% y luego 15% más, pedidos por cliente sobre los 125px
+       anteriores (64 → 86 → 125 → 69 → 59). Solo aplica al nav — el
+       footer tiene su propia clase abajo, no comparten tamaño. */
+    height: 59px;
     display: inline-block;
+  }
+
+  .logo-real--footer {
+    /* Footer nunca pidió estos cambios de tamaño del nav — vuelve a su
+       proporción original de antes de esta sesión, luego +15% y +15%
+       más, pedidos aparte (64 → 74 → 85). */
+    height: 85px;
+    /* Corrido ~1cm (38px a 96dpi) a la izquierda del centrado del wrap,
+       pedido explícito del cliente. */
+    transform: translateX(-38px);
   }
 
   .logo {
