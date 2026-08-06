@@ -1,10 +1,24 @@
 # Estado del proyecto — Arcan Advisors
 
-Última actualización: 2026-08-05 (commiteado, pusheado y desplegado a GitHub Pages)
+Última actualización: 2026-08-05 (logo real integrado en Nav/Footer)
 
-## Primer deploy a GitHub Pages (2026-08-05)
+## Logo real en Nav/Footer — gap de "logo vectorial" resuelto parcialmente (2026-08-05)
 
-Usuario pidió explícitamente commit + push + deploy. Se agregó `.github/workflows/deploy.yml` (build con Node 20 + `actions/deploy-pages`, dispara en push a `main`). **Falta 1 paso manual, no lo pude hacer yo** — no hay `gh` CLI en este entorno para tocarlo por API: en GitHub, Settings → Pages → Source, elegir **"GitHub Actions"** (no "Deploy from a branch"). Sin ese toggle prendido una vez, el job de deploy va a fallar aunque el workflow esté bien.
+El usuario aportó `public/BannerArcan.png` (lockup completo real, tipografía sans-serif geométrica — distinta al serif que parecía en las láminas del brandbook comprimidas, se prioriza este asset real por ser más confiable que mi lectura visual de un JPG). Igual que con `LogoRB.png` antes: el fondo "transparente" era en realidad un patrón de cuadros dibujado (`hasAlpha:false` en los metadatos), no transparencia real. Se reconstruyó por chroma (dorado, saturación alta) + brillo (blanco casi puro, >250) — funciona bien sobre fondos oscuros (Nav/Footer), que es el único uso actual. Resultado: `public/logo-arcan-advisors.webp` (~55KB).
+
+`Logo.astro` ahora usa este asset real para `variant="negativa"` (Nav y Footer, únicos consumidores de esa variante) vía `existsSync`, con fallback al isólogo SVG reconstruido si el archivo no está. Los variants `principal` y `mono` siguen sin asset real — **gap de logo vectorial sigue parcialmente abierto** para esos dos casos.
+
+`BannerArcan.png` (el original, ~950KB) se borró después de generar el derivado optimizado — mismo criterio que las fotos de Hero/Servicios.
+
+## Primer deploy a GitHub Pages — LIVE (2026-08-05)
+
+**El sitio está publicado:** https://antonioprado-sketch.github.io/arcan-prototipo/
+
+Se agregó `.github/workflows/deploy.yml` (build + `actions/deploy-pages`, dispara en push a `main`). Los primeros 3 intentos fallaron:
+- Los primeros 2: Pages todavía no estaba configurado como "GitHub Actions" en Settings → Pages → Source (el usuario lo activó después).
+- El 3ro: falló en el paso "Build" sin causa clara — no pude ver el log real (GitHub devuelve 403 sin permisos de admin, y no hay `gh` CLI/token en este entorno para pedirlo por API). Reproduje `npm ci` + `npm run build` en un clon limpio localmente y funcionó perfecto, así que no pude confirmar la causa exacta. Cambié el workflow de Node 20 a Node 22 (Node 20 ya estaba deprecado en Actions, según un warning que sí pude ver) y el 4to intento corrió limpio. No hay certeza de que ese cambio haya sido la causa real vs. algo transitorio — si vuelve a fallar, pedir el log completo del paso "Build" directo del usuario (es la única forma de verlo, no tengo acceso).
+
+**Nota para próximos deploys:** cada push a `main` dispara un build+deploy automático. `public/BannerArcan.png` quedó sin trackear a propósito (el usuario confirmó que está mal — dice "ARCANA" en vez de "ARCAN") — no agregarlo a git sin que lo reemplacen.
 
 URL esperada una vez prendido: `https://antonioprado-sketch.github.io/arcan-prototipo/`.
 
