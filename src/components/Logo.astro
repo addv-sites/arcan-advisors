@@ -11,7 +11,7 @@
   (no hay asset real para esos fondos todavía) — ver gap en PROJECT_STATE.md.
 */
 import { existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 
 interface Props {
   variant?: 'principal' | 'negativa' | 'mono';
@@ -22,8 +22,10 @@ interface Props {
 const { variant = 'principal', markOnly = false, class: className = '' } = Astro.props;
 
 const realLogoFile = 'logo-arcan-advisors.webp';
-const realLogoPath = fileURLToPath(new URL('../../public/', import.meta.url));
-const hasRealLogo = existsSync(`${realLogoPath}${realLogoFile}`) && variant === 'negativa' && !markOnly;
+// process.cwd() = raíz del proyecto (donde corre `astro build`), no la
+// ubicación de este componente — import.meta.url-relativo es frágil acá:
+// depende de cómo Vite empaqueta el archivo en build, no del código fuente.
+const hasRealLogo = existsSync(join(process.cwd(), 'public', realLogoFile)) && variant === 'negativa' && !markOnly;
 const realLogoSrc = `${import.meta.env.BASE_URL}${realLogoFile}`;
 
 const markColor = variant === 'mono' ? 'currentColor' : 'var(--color-gold)';
@@ -36,7 +38,7 @@ const taglineColor =
 
 {
   hasRealLogo ? (
-    <img class={`logo-real ${className}`} src={realLogoSrc} alt="Arcan Advisors — Inteligencia Energética" width="180" height="100" />
+    <img class={`logo-real ${className}`} src={realLogoSrc} alt="Arcan Advisors — Inteligencia Energética" width="168" height="100" />
   ) : (
     <span class={`logo logo--${variant} ${className}`} style={variant === 'mono' ? 'color: var(--color-white)' : ''}>
       <svg
@@ -72,7 +74,9 @@ const taglineColor =
 <style>
   .logo-real {
     width: auto;
-    height: 34px;
+    /* 34px se veía chico contra los links del nav — la proporción real del
+       lockup es más ancha que alta, necesita más altura para leerse bien. */
+    height: 52px;
     display: inline-block;
   }
 

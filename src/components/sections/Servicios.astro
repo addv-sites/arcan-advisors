@@ -1,7 +1,7 @@
 ---
 // Copy literal — Brand Book Arcan Advisors v1.0, lámina "05. Nuestros Servicios".
 import { existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 
 const servicios = [
   {
@@ -49,10 +49,12 @@ const servicios = [
 // no se haya resuelto, cada card cae al placeholder de marca (nunca un
 // <img src> roto). Apenas el archivo exista en public/images/servicios/,
 // esta misma build lo toma solo, sin tocar el componente.
-const imagesDir = fileURLToPath(new URL('../../../public/images/servicios/', import.meta.url));
+// process.cwd() = raíz del proyecto — ver nota en Logo.astro sobre por qué
+// no se usa import.meta.url-relativo (frágil con el bundling de Vite; es
+// justo lo que rompió el logo real y la foto de la banda CTA del footer).
 const servicesWithImageStatus = servicios.map((s, i) => ({
   ...s,
-  hasImage: existsSync(`${imagesDir}${s.image}`),
+  hasImage: existsSync(join(process.cwd(), 'public', 'images', 'servicios', s.image)),
   itemsId: `servicio-items-${i}`,
 }));
 ---

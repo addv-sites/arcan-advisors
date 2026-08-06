@@ -1,6 +1,6 @@
 ---
 import { existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import Logo from './Logo.astro';
 import EnergyPattern from './EnergyPattern.astro';
 import { SITE } from '../data/site.js';
@@ -10,8 +10,9 @@ const year = new Date().getFullYear();
 // Reusa la foto del Hero para la banda CTA (mismo recurso, otro recorte) —
 // evita pedir un asset nuevo solo para esta franja, como en el MockUp.
 const heroImageFile = 'hero-energia.webp';
-const heroImagePath = fileURLToPath(new URL('../../public/images/hero/', import.meta.url));
-const hasCtaImage = existsSync(`${heroImagePath}${heroImageFile}`);
+// process.cwd() = raíz del proyecto — ver nota en Logo.astro sobre por qué
+// no se usa import.meta.url-relativo (frágil con el bundling de Vite).
+const hasCtaImage = existsSync(join(process.cwd(), 'public', 'images', 'hero', heroImageFile));
 const ctaImageSrc = `${import.meta.env.BASE_URL}images/hero/${heroImageFile}`;
 
 const links = [

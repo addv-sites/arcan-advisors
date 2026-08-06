@@ -7,7 +7,7 @@
   "Red de Energía" (motivo de marca real, lámina "03. Sistema Visual").
 */
 import { existsSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 import EnergyPattern from '../EnergyPattern.astro';
 
 const badges = [
@@ -17,8 +17,9 @@ const badges = [
 ];
 
 const heroImageFile = 'hero-energia.webp';
-const heroImagePath = fileURLToPath(new URL('../../../public/images/hero/', import.meta.url));
-const hasHeroImage = existsSync(`${heroImagePath}${heroImageFile}`);
+// process.cwd() = raíz del proyecto, no import.meta.url-relativo — ver
+// nota en Logo.astro (frágil con cómo Vite empaqueta el componente).
+const hasHeroImage = existsSync(join(process.cwd(), 'public', 'images', 'hero', heroImageFile));
 const heroImageSrc = `${import.meta.env.BASE_URL}images/hero/${heroImageFile}`;
 ---
 
