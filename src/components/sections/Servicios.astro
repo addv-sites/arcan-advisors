@@ -63,8 +63,11 @@ const servicesWithImageStatus = servicios.map((s, i) => ({
   <div class="container">
     <div class="section-header services-header" data-reveal>
       <div>
-        <p class="section-eyebrow">Nuestros Servicios</p>
-        <h2 class="section-title">Cuatro líneas de servicio, un mismo propósito: generar valor energético.</h2>
+        <p class="section-eyebrow services-eyebrow">Nuestros Servicios</p>
+        <h2 class="section-title services-title">
+          Cuatro líneas de servicio,<br />
+          un mismo propósito: <span class="services-title-accent">generar valor energético.</span>
+        </h2>
       </div>
       <p class="section-lead services-lead">
         Ofrecemos soluciones especializadas que generan valor, impulsan la eficiencia y promueven la transición energética en México y
@@ -138,12 +141,41 @@ const servicesWithImageStatus = servicios.map((s, i) => ({
     margin-top: 1.5rem;
     padding-left: 1rem;
     border-left: 2px solid var(--color-gold);
+    /* Más compacto y liviano, fiel al MockUp. */
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   @media (min-width: 900px) {
     .services-lead {
       margin-top: 0;
     }
+  }
+
+  /* Línea dorada corta bajo el eyebrow, tal cual el MockUp. */
+  .services-eyebrow {
+    position: relative;
+    padding-top: 0.75rem;
+  }
+
+  .services-eyebrow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 2px;
+    background: var(--color-gold);
+  }
+
+  .services-title {
+    /* Más compacto que el resto de section-title — dos líneas cortas
+       como el MockUp, en vez de un párrafo largo envuelto en 4 líneas. */
+    font-size: clamp(1.15rem, 1.7vw, 1.45rem);
+  }
+
+  .services-title-accent {
+    color: var(--color-gold);
   }
 
   .card--media {
