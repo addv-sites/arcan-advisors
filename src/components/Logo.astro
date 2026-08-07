@@ -4,9 +4,13 @@
   markOnly: true = solo isotipo, sin wordmark (uso secundario permitido por brandbook)
 
   Para 'negativa' (Nav/Footer, fondo oscuro) se usa el lockup REAL que
-  aportó el cliente (public/logo-arcan-advisors.webp, extraído de
-  BannerArcan.png — tenía un patrón de cuadros dibujado en vez de
-  transparencia real, se reconstruyó la transparencia por chroma+brillo).
+  aportó el cliente (public/logo-arcan-advisors.webp). El archivo actual
+  (2026-08-06, 1350x436) lo generó Antonio a mano reemplazando el .webp
+  directamente — no viene de `scripts/fix-logo-nav.mjs` (ese script sigue
+  siendo referencia de cómo se diagnosticó y limpió el checkerboard de
+  public/logo-arcan-advisors.jpg en la vuelta anterior, pero quedó
+  desincronizado del archivo actual; no asumir que regenerarlo reproduce
+  este resultado).
   'principal' y 'mono' siguen siendo el isólogo reconstruido a mano en SVG
   (no hay asset real para esos fondos todavía) — ver gap en PROJECT_STATE.md.
 */
@@ -48,8 +52,8 @@ const taglineColor =
       class={`logo-real ${footer ? 'logo-real--footer' : ''} ${className}`}
       src={realLogoSrc}
       alt="Arcan Advisors — Inteligencia Energética"
-      width={footer ? '558' : '1582'}
-      height={footer ? '555' : '489'}
+      width={footer ? '558' : '1350'}
+      height={footer ? '555' : '436'}
     />
   ) : (
     <span class={`logo logo--${variant} ${className}`} style={variant === 'mono' ? 'color: var(--color-white)' : ''}>
