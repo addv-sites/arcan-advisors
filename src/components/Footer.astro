@@ -184,9 +184,13 @@ const serviceLinks = [
   .footer-col {
     display: flex;
     flex-direction: column;
-    /* Reducido de 0.75rem → 0.4rem → 0.15rem — seguía muy separado,
-       pedido explícito del cliente. */
-    gap: 0.15rem;
+    /* Antes: gap 0.15rem (reducido de 0.75rem → 0.4rem → 0.15rem, pedido
+       explícito del cliente). PageSpeed/Lighthouse marcó estos links como
+       touch target insuficiente (~18px de alto real, mínimo WCAG 44px) —
+       confirmado con el cliente, prioriza cumplir 44px. El padding-block
+       de abajo en `.footer-col a` reemplaza este gap (evita duplicar
+       espacio) y es lo que separa los links ahora. */
+    gap: 0;
   }
 
   .footer-col-title {
@@ -205,6 +209,10 @@ const serviceLinks = [
     /* Default (~1.5) dejaba mucho aire en los links de 2 líneas
        ("Formación en Mercado Eléctrico Mayorista", etc). */
     line-height: 1.25;
+    /* Touch target real ≥44px (línea 18px + padding): ver nota en
+       .footer-col sobre por qué esto reemplaza el gap de antes. */
+    padding-block: 0.8rem;
+    display: inline-block;
   }
 
   .footer-col a:hover,

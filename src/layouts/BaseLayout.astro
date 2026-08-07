@@ -22,10 +22,15 @@ const logoUrl = new URL(`${base}icon-512.png`, Astro.site).toString();
 
 // LCP: precargar la foto del Hero (arriba del fold, fetchpriority="high" en
 // Hero.astro) — mismo patrón existsSync que el resto del sitio, nunca un
-// preload a un archivo que no existe.
+// preload a un archivo que no existe. imagesrcset/imagesizes en vez de href
+// fijo: tiene que precargar la misma variante que el navegador va a elegir
+// del srcset de Hero.astro (scripts/generate-hero-sizes.mjs), si no
+// precarga el archivo grande igual y el srcset no sirve para nada.
 const heroImageFile = 'hero-energia.webp';
 const hasHeroImage = existsSync(join(process.cwd(), 'public', 'images', 'hero', heroImageFile));
-const heroImageSrc = `${base}images/hero/${heroImageFile}`;
+const heroImageSrcset = [640, 1024, 1920]
+  .map((w) => `${base}images/hero/hero-energia${w === 1920 ? '' : `-${w}`}.webp ${w}w`)
+  .join(', ');
 
 const serviceNodes = SERVICIOS.map((s) => ({
   '@type': 'Service',
@@ -104,7 +109,9 @@ const jsonLd = {
     <meta name="theme-color" content="#031c0e" />
     <link rel="canonical" href={canonicalUrl} />
 
-    {hasHeroImage && <link rel="preload" as="image" href={heroImageSrc} fetchpriority="high" />}
+    {hasHeroImage && (
+      <link rel="preload" as="image" imagesrcset={heroImageSrcset} imagesizes="100vw" fetchpriority="high" />
+    )}
 
     <link rel="icon" href={`${base}favicon.ico`} sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href={`${base}favicon-32.png`} />
@@ -127,10 +134,10 @@ const jsonLd = {
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,400&display=swap"
-      rel="stylesheet"
-    />
+    {/* Solo los pesos que usa el CSS (400/700/900) — 100, 300 e itálica
+        no se usan en ningún lado (grep confirmado), eran peso muerto
+        compitiendo con el LCP en el critical path. */}
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>

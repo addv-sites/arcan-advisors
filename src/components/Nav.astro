@@ -169,9 +169,11 @@ const links = [
     text-decoration: none;
     font-family: var(--font-secondary);
     font-size: 1rem;
-    padding-block: 0.5rem;
+    /* Touch target real ≥44px (WCAG/Lighthouse) — no lo marcó el audit
+       automático porque el menú arranca `hidden`, pero un usuario real sí
+       lo toca en el celular. */
+    padding-block: 0.85rem;
     display: inline-block;
-    min-height: 24px;
   }
 
   .nav-mobile-menu .btn {

@@ -21,10 +21,28 @@ const heroImageFile = 'hero-energia.webp';
 // nota en Logo.astro (frágil con cómo Vite empaqueta el componente).
 const hasHeroImage = existsSync(join(process.cwd(), 'public', 'images', 'hero', heroImageFile));
 const heroImageSrc = `${import.meta.env.BASE_URL}images/hero/${heroImageFile}`;
+// Variantes responsive (scripts/generate-hero-sizes.mjs) — el LCP en mobile
+// venía de servir el archivo de 1920px a un viewport de ~390px. El Hero
+// ocupa el ancho completo del viewport siempre (sizes="100vw").
+const heroImageSrcset = [640, 1024, 1920]
+  .map((w) => `${import.meta.env.BASE_URL}images/hero/hero-energia${w === 1920 ? '' : `-${w}`}.webp ${w}w`)
+  .join(', ');
 ---
 
 <section class="hero" id="top">
-  {hasHeroImage && <img class="hero-photo" src={heroImageSrc} alt="" loading="eager" fetchpriority="high" width="1920" height="1081" />}
+  {hasHeroImage && (
+    <img
+      class="hero-photo"
+      src={heroImageSrc}
+      srcset={heroImageSrcset}
+      sizes="100vw"
+      alt=""
+      loading="eager"
+      fetchpriority="high"
+      width="1920"
+      height="1081"
+    />
+  )}
   <EnergyPattern />
 
   <div class="hero-overlay" aria-hidden="true"></div>
