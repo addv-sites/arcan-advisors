@@ -2,6 +2,15 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import '../styles/global.css';
+// Self-hosted (PageSpeed marcó Google Fonts como render-blocking: CSS de
+// fonts.googleapis.com + 2 archivos .woff2 de fonts.gstatic.com, 3
+// round-trips cross-origin antes de poder pintar texto). Fontsource
+// empaqueta los mismos archivos que sirve Google — Vite los copia al build
+// y quedan same-origin, sin la cadena de dependencia externa. Solo los 3
+// pesos que usa el CSS del sitio (ver grep en el commit que lo cambió).
+import '@fontsource/lato/400.css';
+import '@fontsource/lato/700.css';
+import '@fontsource/lato/900.css';
 import { SITE } from '../data/site.js';
 import { SERVICIOS } from '../data/services.js';
 
@@ -131,13 +140,6 @@ const jsonLd = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    {/* Solo los pesos que usa el CSS (400/700/900) — 100, 300 e itálica
-        no se usan en ningún lado (grep confirmado), eran peso muerto
-        compitiendo con el LCP en el critical path. */}
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap" rel="stylesheet" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>

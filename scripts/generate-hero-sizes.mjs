@@ -14,7 +14,7 @@ const SIZES = [640, 1024];
 async function main() {
   for (const width of SIZES) {
     const out = `public/images/hero/hero-energia-${width}.webp`;
-    await sharp(SRC).resize({ width }).webp({ quality: 82 }).toFile(out);
+    await sharp(SRC).resize({ width }).webp({ quality: 75 }).toFile(out);
     console.log(`✓ ${out}`);
   }
 }
