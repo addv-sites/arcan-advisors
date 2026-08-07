@@ -20,9 +20,37 @@ async function resizeTo(src, out, { height, width, quality = 82 }) {
   console.log(`✓ ${target} (${meta.width}x${meta.height})`);
 }
 
+// LogoFooter.png trae el wordmark "ARCAN"/tagline en negro (pensado para
+// fondo claro) — el dorado de la marca queda intacto (nunca cae por debajo
+// de mx~140, confirmado con un scan de la fuente), así que un umbral simple
+// de brillo alcanza para distinguir texto de marca sin tocar el dorado.
+// Sin este paso, resizeTo() de LogoFooter.png solo redimensiona y el
+// wordmark queda negro sobre el Forest Green del footer — invisible.
+async function recolorFooterLogo(src) {
+  const { data, info } = await sharp(src).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const { width, height, channels } = info;
+  for (let p = 0; p < width * height; p++) {
+    const o = p * channels;
+    const r = data[o];
+    const g = data[o + 1];
+    const b = data[o + 2];
+    const mx = Math.max(r, g, b);
+    const mn = Math.min(r, g, b);
+    if (mx - mn <= 20 && mx < 150) {
+      data[o] = 255;
+      data[o + 1] = 255;
+      data[o + 2] = 255;
+    }
+  }
+  return sharp(data, { raw: { width, height, channels } });
+}
+
 async function main() {
   await resizeTo('public/logosf.png', 'public/logo-arcan-advisors.webp', { height: 180, quality: 85 });
-  await resizeTo('public/LogoFooter.png', 'public/logo-footer.webp', { height: 255, quality: 85 });
+
+  const footerRecolored = await recolorFooterLogo('public/LogoFooter.png');
+  await footerRecolored.resize({ height: 255 }).webp({ quality: 85 }).toFile('public/logo-footer.webp.tmp');
+  console.log('✓ public/logo-footer.webp.tmp');
 
   const servicios = [
     'servicio-01-licitaciones.webp',
