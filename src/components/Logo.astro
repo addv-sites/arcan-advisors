@@ -102,9 +102,6 @@ const taglineColor =
        proporción original de antes de esta sesión, luego +15% y +15%
        más, pedidos aparte (64 → 74 → 85). */
     height: 85px;
-    /* Corrido ~1cm (38px a 96dpi) a la izquierda del centrado del wrap,
-       pedido explícito del cliente. */
-    transform: translateX(-38px);
   }
 
   .logo {
@@ -146,5 +143,16 @@ const taglineColor =
     font-weight: 400;
     letter-spacing: 0.14em;
     margin-top: 0.15rem;
+  }
+
+  /* Corrido ~1cm (38px a 96dpi) a la izquierda del centrado del wrap,
+     pedido explícito del cliente — pero solo tiene sentido en el layout
+     de footer ancho (Footer.astro pasa a grid en 768px). Sin el media
+     query, el mismo corrimiento descentraba el logo en el footer de una
+     sola columna en mobile. */
+  @media (min-width: 768px) {
+    .logo-real--footer {
+      transform: translateX(-38px);
+    }
   }
 </style>
