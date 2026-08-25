@@ -238,10 +238,15 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
     border-color: var(--color-forest-green);
   }
 
-  .contact-map-link:hover,
-  .contact-map-link:focus-visible {
+  /* Prefijo .contact-info: .contact-info a (más abajo) queda con más
+     especificidad que .contact-map-link:hover solo (Astro duplica el
+     atributo de scope en cada selector compuesto) y pisaba el color del
+     hover — texto forest-green sobre fondo forest-green, invisible. */
+  .contact-info .contact-map-link:hover,
+  .contact-info .contact-map-link:focus-visible {
     background: var(--color-forest-green);
     color: var(--color-white);
+    border-color: var(--color-forest-green);
   }
 </style>
 
