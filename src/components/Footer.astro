@@ -20,14 +20,15 @@ const links = [
   { href: '#nosotros', label: 'Nosotros' },
   { href: '#servicios', label: 'Servicios' },
   { href: '#producto', label: 'Producto' },
+  { href: '#capacidades', label: 'Capacidades' },
   { href: '#contacto', label: 'Contacto' },
 ];
 
-// Nombres reales de las 4 líneas de servicio (mismos que Servicios.astro,
-// lámina "05. Nuestros Servicios") — todas apuntan a #servicios: es un
-// sitio de una sola página, no hay rutas individuales por servicio.
+// Nombres reales de las 4 líneas de servicio (mismos que src/data/services.js)
+// — todas apuntan a #servicios: es un sitio de una sola página, no hay
+// rutas individuales por servicio.
 const serviceLinks = [
-  'Asesoría en Licitaciones Energéticas',
+  'Asesoría en licitaciones de suministro eléctrico',
   'Formación en Mercado Eléctrico Mayorista',
   'Comercialización de Productos Ambientales',
   'Consultoría Estratégica en Energía',
@@ -42,7 +43,7 @@ const serviceLinks = [
   <div class="container footer-cta-inner">
     <div>
       <p class="footer-cta-title">¿Listo para generar <span>valor</span> en tu negocio?</p>
-      <p class="footer-cta-sub">Hagamos de la energía una ventaja estratégica para tu empresa.</p>
+      <p class="footer-cta-sub">Convirtamos su costo de energía en una ventaja competitiva.</p>
     </div>
     <a class="btn btn-primary" href="#contacto">Contáctanos</a>
   </div>
@@ -55,7 +56,8 @@ const serviceLinks = [
         <Logo variant="negativa" footer />
       </div>
       <p>
-        Consultoría estratégica para la transición energética en México y Latinoamérica.
+        Asesoría estratégica en compra de energía para grandes consumidores industriales y participantes del Mercado Eléctrico
+        Mayorista en México.
       </p>
     </div>
 

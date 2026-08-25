@@ -1,6 +1,28 @@
 # Estado del proyecto — Arcan Advisors
 
-Última actualización: 2026-08-05 (logo real integrado en Nav/Footer)
+Última actualización: 2026-08-25 (reposicionamiento completo — comprador de energía / MEM)
+
+## Reposicionamiento completo del sitio (2026-08-25)
+
+Implementado en una sola pasada el brief de reposicionamiento del cliente (`clientCom.md`, 30 secciones): de "consultora de inteligencia energética / ESG / transición energética / LATAM" a **"especialista senior en estrategia de compra de energía para grandes consumidores industriales y participantes del Mercado Eléctrico Mayorista en México"**.
+
+**Contenido:**
+- Hero: nuevo headline ("Conocemos el mercado eléctrico desde adentro"), subtítulo, 3 badges.
+- Nosotros: reescrito completo (encabezado, trayectoria, modelo, enfoque — sección 5), Propósito/Misión/Visión nuevos (sección 7), valores reducidos de 5 a 3 (Integridad/Innovación/Independencia — sección 6).
+- Servicios (`src/data/services.js`): servicio 1 renombrado a "Asesoría en licitaciones de suministro eléctrico" + bullet nuevo de gestión de contratos vigentes (pedido puntual del cliente antes del brief completo); servicio 2 reforzado con la línea "impartida por quien operó el mercado..."; servicio 3 renombrado con I-REC/GDOs/créditos de carbono (ya no "bonos de carbono"); servicio 4 reescrito sin ARCAN Intelligence™.
+- `Producto.astro`: reemplazado completo — ya no es "ARCAN Intelligence™" (herramienta propietaria), ahora presenta **Quanten** como plataforma de un aliado tecnológico bajo licenciamiento máster de Arcan, con link a `quanten.com.mx`.
+- Nueva sección `src/components/sections/CapacidadesAliados.astro` (`#capacidades`, enlazada en Nav/Footer): 3 capacidades (datos de mercado vía Quanten —único aliado con nombre/link—, certificados de origen renovable, créditos de carbono — estos dos últimos sin nombrar aliados, por regla explícita del cliente).
+- `src/components/sections/CasosExito.astro`: arquitectura preparada (cards con sector/reto/intervención/resultado/rango), array de casos vacío, **no importada en `index.astro`** — queda lista para activar cuando existan casos reales, sin rediseño.
+- Contacto: devoseo completo (Argentina → México) en copy visible y mensajes de validación del form.
+- Footer: CTA final actualizado, texto de marca sin "transición energética"/Latinoamérica.
+- SEO: title/description del `<title>`/meta actualizados, JSON-LD `areaServed` de `['México','Latinoamérica']` a `'México'`, `manifest.webmanifest` actualizado.
+- Logo (`Logo.astro`): alt text del logo real cambiado de "Arcan Advisors — Inteligencia Energética" a "Arcan Advisors"; tagline "INTELIGENCIA ENERGÉTICA" sacado del isólogo SVG de fallback.
+
+**Gap conocido — requiere revisión humana:** los assets raster reales del logo (`public/logo-arcan-advisors.webp` en Nav, `public/logo-footer.webp` en Footer) tienen el texto "INTELIGENCIA ENERGÉTICA" **quemado en los píxeles** (no es texto editable en código). El brief pide eliminar esa tagline de "cualquier componente", pero según la regla del proyecto no se rediseña el logo a mano — se necesita que el cliente entregue un `favicon-package`/lockup actualizado sin esa línea para reemplazar el archivo (mismo proceso que `scripts/generate-icons.mjs` ya usa). Queda pendiente hasta que Alejandro lo confirme o entregue el asset nuevo.
+
+**Verificación:** `npm run build` OK, `npm audit` en 0 vulnerabilidades (se corrigió 1 alta de `nanoid` con `npm audit fix`), revisado visualmente en `npm run preview` (Hero, Nosotros, Servicios, Producto/Quanten, Capacidades, Contacto, Footer), sin errores de consola. Búsqueda global confirmó cero residuales de "ARCAN Intelligence™", "Inteligencia Energética" (como posicionamiento), "Latinoamérica"/"América Latina"/"LATAM", "bonos de carbono" y voseo en `src/` y `dist/`.
+
+**No commiteado ni pusheado todavía** — pendiente de revisión final de Alejandro antes de sync a GitHub Pages.
 
 ## Logo real en Nav/Footer — gap de "logo vectorial" resuelto parcialmente (2026-08-05)
 

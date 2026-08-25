@@ -2,7 +2,7 @@
 import { SITE } from '../../data/site.js';
 
 const servicios = [
-  'Asesoría en Licitaciones Energéticas',
+  'Asesoría en licitaciones de suministro eléctrico',
   'Formación en Mercado Eléctrico Mayorista',
   'Comercialización de Productos Ambientales',
   'Consultoría Estratégica en Energía',
@@ -22,7 +22,7 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
         <p class="section-eyebrow">Contacto</p>
         <h2 class="section-title">Hablemos de tu proyecto</h2>
         <p class="section-lead">
-          Escribinos y armamos el mensaje por vos — se abre WhatsApp con todo prellenado, listo para enviar.
+          Escríbenos y armamos el mensaje por ti — se abre WhatsApp con todo prellenado, listo para enviar.
         </p>
       </div>
 
@@ -52,7 +52,7 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
         <div class="field field-full">
           <label for="servicio">Servicio de interés <span aria-hidden="true">*</span></label>
           <select id="servicio" name="servicio" required>
-            <option value="" selected disabled>Seleccioná una opción</option>
+            <option value="" selected disabled>Selecciona una opción</option>
             {servicios.map((s) => (
               <option value={s}>{s}</option>
             ))}
@@ -272,19 +272,19 @@ const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
         if (message) hasError = true;
       };
 
-      setError('nombre', values.nombre ? '' : 'Ingresá tu nombre.');
-      setError('correo', /.+@.+\..+/.test(values.correo) ? '' : 'Ingresá un correo válido.');
-      setError('servicio', values.servicio ? '' : 'Elegí un servicio de interés.');
-      setError('mensaje', values.mensaje ? '' : 'Contanos brevemente tu proyecto.');
+      setError('nombre', values.nombre ? '' : 'Ingresa tu nombre.');
+      setError('correo', /.+@.+\..+/.test(values.correo) ? '' : 'Ingresa un correo válido.');
+      setError('servicio', values.servicio ? '' : 'Elige un servicio de interés.');
+      setError('mensaje', values.mensaje ? '' : 'Cuéntanos brevemente tu proyecto.');
 
       if (hasError) {
-        status.textContent = 'Revisá los campos marcados antes de enviar.';
+        status.textContent = 'Revisa los campos marcados antes de enviar.';
         return;
       }
 
       const link = getWhatsAppLink(values);
       window.open(link, '_blank', 'noopener');
-      status.textContent = 'Abrimos WhatsApp con tu mensaje listo — confirmá el envío ahí. Tus datos siguen acá por si necesitás corregir algo.';
+      status.textContent = 'Abrimos WhatsApp con tu mensaje listo — confirma el envío ahí. Tus datos siguen acá por si necesitas corregir algo.';
     });
   }
 </script>

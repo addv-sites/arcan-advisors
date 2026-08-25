@@ -1,7 +1,7 @@
 {
-  "name": "Arcan Advisors — Inteligencia Energética",
+  "name": "Arcan Advisors — Estrategia de compra de energía",
   "short_name": "Arcan Advisors",
-  "description": "Consultoría estratégica para la transición energética en México y Latinoamérica.",
+  "description": "Asesoría estratégica en compra de energía para grandes consumidores y participantes del Mercado Eléctrico Mayorista en México.",
   "start_url": "/arcan-prototipo/",
   "scope": "/arcan-prototipo/",
   "display": "standalone",

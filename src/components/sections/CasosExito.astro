@@ -1,0 +1,67 @@
+---
+/*
+  Arquitectura preparada para casos de éxito — brief de reposicionamiento del
+  cliente (clientCom.md, sección 14). Arcan aún no tiene casos publicables:
+  NO inventar clientes, cifras ni resultados. Este componente queda
+  maquetado y listo, pero NO se importa en src/pages/index.astro — por eso
+  no se renderiza en el sitio. Para activarlo cuando existan casos reales:
+    1. Cargar los casos reales en `casos` (mismo shape que abajo).
+    2. Importar <CasosExito /> en index.astro y montarlo donde corresponda
+       (después de Servicios o Producto).
+  No requiere rediseño: usa los mismos patrones (.section, .cards-grid,
+  .card) que el resto del sitio.
+*/
+interface Caso {
+  sector: string;
+  reto: string;
+  intervencion: string;
+  resultado: string;
+  rango: string;
+}
+
+const casos: Caso[] = [];
+---
+
+{casos.length > 0 && (
+  <section class="section" id="casos-exito">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <p class="section-eyebrow">Casos de éxito</p>
+        <h2 class="section-title">Resultados reales de nuestros clientes</h2>
+      </div>
+
+      <div class="cards-grid cards-grid--3" data-reveal-group>
+        {casos.map((caso, i) => (
+          <article class="card" data-reveal style={`--reveal-index:${i}`}>
+            <p class="caso-sector">{caso.sector}</p>
+            <h3>{caso.reto}</h3>
+            <p>{caso.intervencion}</p>
+            <p class="caso-resultado">{caso.resultado}</p>
+            <p class="caso-rango">{caso.rango}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .caso-sector {
+    font-family: var(--font-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-forest-green);
+  }
+
+  .caso-resultado {
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .caso-rango {
+    color: var(--color-gold);
+    font-weight: 700;
+  }
+</style>

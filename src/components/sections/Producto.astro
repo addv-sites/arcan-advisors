@@ -1,33 +1,36 @@
 ---
 /*
-  Copy literal derivado del servicio 04 (lámina "05. Nuestros Servicios") —
-  es la única fuente de contenido sobre ARCAN Intelligence™ en el brandbook.
-  No se inventan funcionalidades nuevas. Restricción de posicionamiento
-  ("no está a la venta, no es software comercial") viene dada explícita por
-  el cliente, no del brandbook — se refleja tal cual, sin agregar promesas.
+  Copy actualizado según brief de reposicionamiento del cliente (clientCom.md,
+  sección 11) — reemplaza la sección "ARCAN Intelligence™" (herramienta
+  propietaria) por la presentación correcta de Quanten: plataforma de un
+  aliado tecnológico bajo licenciamiento máster, no desarrollo propio de
+  Arcan. Enlace autorizado explícitamente por el cliente.
 */
 const capacidades = [
-  'Análisis avanzado de datos energéticos',
-  'Construcción inteligente de RFPs con ARCAN Intelligence™',
-  'Modelado de escenarios y simulaciones predictivas',
-  'Evaluación de riesgos y oportunidades',
-  'Decisiones informadas, rápidas y rentables',
-  'Ventaja competitiva basada en inteligencia de mercado',
+  'Precios marginales locales (PML)',
+  'Demanda y servicios conexos',
+  'Recomendaciones fundamentadas en datos actuales, no en supuestos',
+  'Inteligencia de mercado que normalmente no está al alcance del cliente',
 ];
+
+const quantenUrl = 'https://quanten.com.mx/landing/index.html';
 ---
 
 <section class="section section--dark" id="producto">
   <div class="container producto-grid">
     <div class="section-header" data-reveal style="margin-bottom:0">
       <p class="section-eyebrow">Producto</p>
-      <h2 class="section-title">ARCAN Intelligence™</h2>
+      <h2 class="section-title">Inteligencia de mercado con Quanten</h2>
       <p class="section-lead">
-        Nuestra herramienta propietaria de análisis de datos y construcción de RFPs que transforma información en decisiones
-        estratégicas de alto impacto.
+        Arcan integra Quanten, una plataforma especializada en datos del Mercado Eléctrico Mayorista —precios marginales locales,
+        demanda y servicios conexos— sobre la cual Arcan cuenta con licenciamiento máster. Esto nos permite fundamentar cada
+        recomendación en datos actuales del mercado, no en supuestos. El cliente accede a inteligencia de mercado que normalmente no
+        está a su alcance, traducida en decisiones de compra concretas.
       </p>
+      <a class="btn btn-secondary producto-link" href={quantenUrl} target="_blank" rel="noopener">Conoce Quanten</a>
       <p class="producto-disclaimer">
-        Plataforma propietaria de apoyo a la toma de decisiones — fortalece nuestros servicios de consultoría. No se comercializa de
-        forma independiente.
+        Quanten es la plataforma de un aliado tecnológico bajo licencia. Arcan cuenta con licenciamiento máster con derecho a
+        sublicenciar — no es un desarrollo propio ni un producto tecnológico de Arcan.
       </p>
     </div>
 
@@ -55,6 +58,10 @@ const capacidades = [
       grid-template-columns: 1fr 1fr;
       align-items: center;
     }
+  }
+
+  .producto-link {
+    margin-top: 1.5rem;
   }
 
   .producto-disclaimer {

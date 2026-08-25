@@ -46,7 +46,7 @@ const serviceNodes = SERVICIOS.map((s) => ({
   name: s.title,
   description: s.text,
   provider: { '@id': `${SITE.url}#organization` },
-  areaServed: ['México', 'Latinoamérica'],
+  areaServed: 'México',
 }));
 
 const jsonLd = {
@@ -85,7 +85,7 @@ const jsonLd = {
         postalCode: SITE.address.zip.replace('C.P. ', ''),
         addressCountry: 'MX',
       },
-      areaServed: ['México', 'Latinoamérica'],
+      areaServed: 'México',
       contactPoint: {
         '@type': 'ContactPoint',
         contactType: 'customer service',

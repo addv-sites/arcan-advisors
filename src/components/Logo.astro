@@ -42,8 +42,6 @@ const markColor = variant === 'mono' ? 'currentColor' : 'var(--color-gold)';
 const arcanColor =
   variant === 'principal' ? 'var(--color-forest-green)' : variant === 'negativa' ? 'var(--color-white)' : 'currentColor';
 const advisorsColor = variant === 'mono' ? 'currentColor' : 'var(--color-gold)';
-const taglineColor =
-  variant === 'principal' ? 'var(--color-medium-gray)' : variant === 'negativa' ? 'var(--color-light-gray)' : 'currentColor';
 ---
 
 {
@@ -51,7 +49,7 @@ const taglineColor =
     <img
       class={`logo-real ${footer ? 'logo-real--footer' : ''} ${className}`}
       src={realLogoSrc}
-      alt="Arcan Advisors — Inteligencia Energética"
+      alt="Arcan Advisors"
       width={footer ? '269' : '557'}
       height={footer ? '255' : '180'}
     />
@@ -77,9 +75,6 @@ const taglineColor =
           </span>
           <span class="logo-advisors" style={`color:${advisorsColor}`}>
             ADVISORS
-          </span>
-          <span class="logo-tagline" style={`color:${taglineColor}`}>
-            INTELIGENCIA ENERGÉTICA
           </span>
         </span>
       )}
@@ -135,14 +130,6 @@ const taglineColor =
     font-weight: 700;
     letter-spacing: 0.18em;
     margin-top: 0.1rem;
-  }
-
-  .logo-tagline {
-    font-family: var(--font-secondary);
-    font-size: 0.42rem;
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    margin-top: 0.15rem;
   }
 
   /* Corrido ~1cm (38px a 96dpi) a la izquierda del centrado del wrap,

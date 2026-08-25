@@ -1,0 +1,73 @@
+---
+/*
+  Nueva sección — brief de reposicionamiento del cliente (clientCom.md,
+  secciones 12-13). Regla absoluta: Quanten es el único aliado que puede
+  aparecer con nombre, logo o enlace. El resto de aliados (certificados de
+  origen renovable, créditos de carbono) se presenta únicamente por función,
+  sin nombres ni logos — no inventar.
+*/
+const quantenUrl = 'https://quanten.com.mx/landing/index.html';
+
+const capacidades = [
+  {
+    title: 'Datos de mercado',
+    text: 'Quanten — inteligencia del MEM bajo licenciamiento máster.',
+    href: quantenUrl,
+    icon: 'M4 19h16M6 19V9l5-4 5 4v10M10 19v-6h4v6',
+  },
+  {
+    title: 'Certificados de origen renovable',
+    text: 'Certificados de origen renovable (I-REC) y Garantías de Origen (GDOs), a través de aliados especializados.',
+    icon: 'M12 2c4 3 6 6 6 10a6 6 0 1 1-12 0c0-4 2-7 6-10Z',
+  },
+  {
+    title: 'Créditos de carbono',
+    text: 'Créditos de carbono, a través de aliados especializados.',
+    icon: 'M12 3l2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7L12 3Z',
+  },
+];
+---
+
+<section class="section section--muted" id="capacidades">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <p class="section-eyebrow">Capacidades y aliados</p>
+      <h2 class="section-title">Capacidades y aliados</h2>
+      <p class="section-lead">
+        Arcan opera como especialista de referencia y amplía su oferta a través de aliados seleccionados en cada frente. Así, el
+        cliente accede a un servicio integral —datos de mercado, productos ambientales, estrategia— sin renunciar a la atención
+        directa de un experto senior.
+      </p>
+    </div>
+
+    <div class="cards-grid cards-grid--3" data-reveal-group>
+      {capacidades.map((cap, i) => (
+        <article class="card" data-reveal style={`--reveal-index:${i}`}>
+          <span class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d={cap.icon} />
+            </svg>
+          </span>
+          <h3>{cap.title}</h3>
+          <p>{cap.text}</p>
+          {cap.href && (
+            <a class="card-link" href={cap.href} target="_blank" rel="noopener">
+              Conoce Quanten
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .card-link {
+    color: var(--color-forest-green);
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>

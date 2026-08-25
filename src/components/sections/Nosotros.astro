@@ -1,24 +1,35 @@
 ---
 /*
-  Copy literal — Brand Book Arcan Advisors v1.0:
-  - Esencia de marca: lámina "02. nuestra marcar"
-  - Propósito / Misión / Visión / Valores: lámina "04. Estrategia de Marca"
+  Copy actualizado según brief de reposicionamiento del cliente (clientCom.md,
+  secciones 5-7): especialista senior en compra de energía para el MEM, no
+  consultora ESG/transición energética. Reemplaza el copy original del Brand
+  Book v1.0 (lámina "04. Estrategia de Marca"), que quedó obsoleto frente a
+  este posicionamiento.
 */
+const trayectoria =
+  'Arcan Advisors nace de más de doce años de experiencia en posiciones de liderazgo senior en el sector eléctrico mexicano, incluyendo la originación del Suministrador Calificado con mayor volumen de energía suministrada en México.';
+
+const modelo =
+  'Operamos como una firma de consultoría independiente respaldada por una red de aliados estratégicos especializados. Para el acceso a datos del mercado, contamos con una plataforma profesional bajo licencia; para la intermediación de certificados de origen renovable y productos ambientales, trabajamos con aliados con presencia en mercados nacionales e internacionales. Este modelo permite ofrecer un servicio integral sin perder la atención directa del especialista.';
+
+const enfoque =
+  'El modelo de Arcan es el de un especialista de referencia: conoce el mercado con la profundidad de quien ha estado desde el inicio de su creación, garantiza atención senior en cada etapa del proceso, y mide su éxito no por la duración del contrato de consultoría, sino por la capacidad que desarrolla en sus clientes para tomar mejores decisiones, con o sin nuestro acompañamiento.';
+
 const pillars = [
   {
     key: 'proposito',
     title: 'Propósito',
-    text: 'Aportar inteligencia estratégica que genere valor y transforme el futuro energético de manera sostenible.',
+    text: 'Poner la experiencia del suministro al servicio del comprador de energía.',
   },
   {
     key: 'mision',
     title: 'Misión',
-    text: 'Brindamos asesoría estratégica, formación especializada y soluciones innovadoras para impulsar el desarrollo del sector energético en México y Latinoamérica.',
+    text: 'Brindar asesoría estratégica y formación especializada para que los grandes consumidores y participantes del MEM compren energía en su mejor posición posible.',
   },
   {
     key: 'vision',
     title: 'Visión',
-    text: 'Ser la consultora de referencia en inteligencia energética en América Latina, reconocida por nuestra capacidad de anticipar el futuro y generar impacto positivo y sostenible.',
+    text: 'Ser el especialista de referencia en estrategia de compraventa de energía en México.',
   },
 ];
 
@@ -29,24 +40,14 @@ const valores = [
     icon: 'M12 2 3 6v6c0 5 3.8 8.7 9 10 5.2-1.3 9-5 9-10V6l-9-4Z M8.5 12.5l2.5 2.5 5-5',
   },
   {
-    title: 'Excelencia',
-    text: 'Buscamos la más alta calidad en nuestras soluciones y relaciones.',
-    icon: 'M12 3l2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7L12 3Z',
-  },
-  {
-    title: 'Colaboración',
-    text: 'Trabajamos junto a nuestros clientes y aliados para lograr objetivos comunes.',
-    icon: 'M8 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z M16 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z M3 20c0-3 2.5-5 5-5s5 2 5 5 M11 20c0-3 2.5-5 5-5s5 2 5 5',
-  },
-  {
-    title: 'Sostenibilidad',
-    text: 'Promovemos soluciones que generan valor económico, social y ambiental.',
-    icon: 'M12 2c4 3 6 6 6 10a6 6 0 1 1-12 0c0-4 2-7 6-10Z',
-  },
-  {
     title: 'Innovación',
-    text: 'Impulsamos nuevas ideas y tecnologías para transformar el sector energético.',
+    text: 'Impulsamos nuevas ideas y herramientas para transformar la toma de decisiones en el sector eléctrico.',
     icon: 'M9 18h6 M10 21h4 M12 3a6 6 0 0 0-3.5 10.9c.6.4.9 1 .9 1.6v.5h5.2v-.5c0-.6.3-1.2.9-1.6A6 6 0 0 0 12 3Z',
+  },
+  {
+    title: 'Independencia',
+    text: 'No tenemos conflicto de interés con suministradores: nuestra función es representar estratégicamente los intereses del comprador.',
+    icon: 'M8 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z M16 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z M3 20c0-3 2.5-5 5-5s5 2 5 5 M11 20c0-3 2.5-5 5-5s5 2 5 5',
   },
 ];
 ---
@@ -55,21 +56,13 @@ const valores = [
   <div class="container">
     <div class="section-header" data-reveal>
       <p class="section-eyebrow">Nosotros</p>
-      <h2 class="section-title">
-        Somos una consultora estratégica especializada en el sector energético de México y Latinoamérica.
-      </h2>
-      <p class="section-lead">
-        Transformamos datos y conocimiento en decisiones inteligentes que generan valor, competitividad y sostenibilidad.
-      </p>
+      <h2 class="section-title">Construyendo el mercado desde adentro</h2>
+      <p class="section-lead">{trayectoria}</p>
     </div>
 
-    <div class="cards-grid cards-grid--3" data-reveal-group>
-      {pillars.map((pillar, i) => (
-        <article class="card" data-reveal style={`--reveal-index:${i}`}>
-          <h3>{pillar.title}</h3>
-          <p>{pillar.text}</p>
-        </article>
-      ))}
+    <div class="nosotros-body" data-reveal-group>
+      <p data-reveal style="--reveal-index:0">{modelo}</p>
+      <p data-reveal style="--reveal-index:1">{enfoque}</p>
     </div>
 
     <h3 class="valores-title" data-reveal>Nuestros valores</h3>
@@ -88,10 +81,38 @@ const valores = [
         </div>
       ))}
     </div>
+
+    <div class="cards-grid cards-grid--3 pillars-grid" data-reveal-group>
+      {pillars.map((pillar, i) => (
+        <article class="card" data-reveal style={`--reveal-index:${i}`}>
+          <h3>{pillar.title}</h3>
+          <p>{pillar.text}</p>
+        </article>
+      ))}
+    </div>
   </div>
 </section>
 
 <style>
+  .nosotros-body {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 56rem;
+    margin-top: var(--stack-sm);
+  }
+
+  .nosotros-body p {
+    font-family: var(--font-secondary);
+    color: var(--color-text-muted);
+    font-size: 1rem;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .pillars-grid {
+    margin-top: var(--stack-lg);
+  }
+
   .valores-title {
     margin-top: var(--stack-lg);
     font-size: 1.1rem;
