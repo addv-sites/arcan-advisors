@@ -1,6 +1,6 @@
 # Estado del proyecto — Arcan Advisors
 
-Última actualización: 2026-08-25 (reposicionamiento completo — comprador de energía / MEM)
+Última actualización: 2026-09-01 (logos Nav/Footer y og-image renovados con assets del cliente)
 
 ## Reposicionamiento completo del sitio (2026-08-25)
 
@@ -18,7 +18,15 @@ Implementado en una sola pasada el brief de reposicionamiento del cliente (`clie
 - SEO: title/description del `<title>`/meta actualizados, JSON-LD `areaServed` de `['México','Latinoamérica']` a `'México'`, `manifest.webmanifest` actualizado.
 - Logo (`Logo.astro`): alt text del logo real cambiado de "Arcan Advisors — Inteligencia Energética" a "Arcan Advisors"; tagline "INTELIGENCIA ENERGÉTICA" sacado del isólogo SVG de fallback.
 
-**Gap conocido — requiere revisión humana:** los assets raster reales del logo (`public/logo-arcan-advisors.webp` en Nav, `public/logo-footer.webp` en Footer) tienen el texto "INTELIGENCIA ENERGÉTICA" **quemado en los píxeles** (no es texto editable en código). El brief pide eliminar esa tagline de "cualquier componente", pero según la regla del proyecto no se rediseña el logo a mano — se necesita que el cliente entregue un `favicon-package`/lockup actualizado sin esa línea para reemplazar el archivo (mismo proceso que `scripts/generate-icons.mjs` ya usa). Queda pendiente hasta que Alejandro lo confirme o entregue el asset nuevo.
+**Gap conocido — requiere revisión humana:** los assets raster reales del logo (`public/logo-arcan-advisors.webp` en Nav, `public/logo-footer.webp` en Footer) tienen el texto "INTELIGENCIA ENERGÉTICA" **quemado en los píxeles** (no es texto editable en código). El brief pide eliminar esa tagline de "cualquier componente", pero según la regla del proyecto no se rediseña el logo a mano — se necesita que el cliente entregue un `favicon-package`/lockup actualizado sin esa línea para reemplazar el archivo (mismo proceso que `scripts/generate-icons.mjs` ya usa). **Resuelto 2026-09-01** — ver sección abajo, el cliente entregó lockups nuevos sin la tagline.
+
+## Logos Nav/Footer y og-image renovados con assets del cliente (2026-09-01)
+
+El cliente entregó `public/logo-arcan-advisors.png` (lockup limpio, 2172x724, sin la tagline "INTELIGENCIA ENERGÉTICA" — cierra el gap de arriba) y una versión nueva de `public/LogoFooter.png` (con efecto glow, 1536x1024). Ambos con wordmark "ARCAN" en negro/oscuro (pensado para fondo claro) y fondo transparente real (confirmado por canal alfa). `scripts/optimize-brand-images.mjs` se generalizó: la función de recoloreo que antes solo aplicaba a `LogoFooter.png` (`recolorFooterLogo` → `recolorDarkWordmark`) ahora corre para ambos archivos, con `trim()` agregado antes de recolorear/redimensionar para descartar el padding transparente de la fuente (relevante en `LogoFooter.png`, que trae mucho aire alrededor del mark por el glow). Resultado: `logo-arcan-advisors.webp` (709x180, 28KB) y `logo-footer.webp` (329x255, 20KB), wordmark blanco legible sobre Forest Green — verificado componiendo ambos sobre `#031c0e` antes de dar por bueno el resultado. `src/components/Logo.astro` actualizado con los nuevos `width`/`height` intrínsecos.
+
+El cliente también entregó `public/og-image.png` ya diseñado (fondo Forest Green + patrón "Red de Energía" + wordmark), reemplazando el que generaba `scripts/generate-icons.mjs`. Se redimensionó a 1200x630 (ratio OG estándar) y se comprimió de 1.55MB a 182KB (`sharp` con `palette:true`). Ojo: si se vuelve a correr `generate-icons.mjs`, ese script todavía dibuja su propia versión programática de `og-image.png` y sobreescribiría este diseño del cliente — no correrlo sin avisar.
+
+**Verificación:** `npm run build` OK, `npm audit` en 0 vulnerabilidades. Commiteado y pusheado (`c594b33`).
 
 **Verificación:** `npm run build` OK, `npm audit` en 0 vulnerabilidades (se corrigió 1 alta de `nanoid` con `npm audit fix`), revisado visualmente en `npm run preview` (Hero, Nosotros, Servicios, Producto/Quanten, Capacidades, Contacto, Footer), sin errores de consola. Búsqueda global confirmó cero residuales de "ARCAN Intelligence™", "Inteligencia Energética" (como posicionamiento), "Latinoamérica"/"América Latina"/"LATAM", "bonos de carbono" y voseo en `src/` y `dist/`.
 
