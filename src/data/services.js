@@ -25,9 +25,9 @@ export const SERVICIOS = [
     image: 'servicio-02-formacion.webp',
   },
   {
-    title: 'Comercialización de Productos Ambientales (I-REC, GDOs, créditos de carbono)',
+    title: 'Comercialización de Productos Ambientales (I‑REC, GDOs, créditos de carbono)',
     text: 'Intermediamos instrumentos ambientales como capacidad complementaria a la estrategia de compra de energía.',
-    items: ['Certificados de Energía Renovable (I-REC)', 'Garantías de Origen (GDOs)', 'Créditos de carbono'],
+    items: ['Certificados de Energía Renovable (I‑REC)', 'Garantías de Origen (GDOs)', 'Créditos de carbono'],
     icon: 'M12 2c4 3 6 6 6 10a6 6 0 1 1-12 0c0-4 2-7 6-10Z',
     image: 'servicio-03-ambientales.webp',
   },
