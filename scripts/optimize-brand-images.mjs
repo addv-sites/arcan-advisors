@@ -1,11 +1,12 @@
 // Redimensiona/comprime assets reales de marca al tamaño de uso real —
-// PageSpeed Insights marcó logo-arcan-advisors.webp (1350x436, servido a
-// height:59px) y logo-footer.webp (558x555, servido a height:85px) como
-// muy pesados para su tamaño mostrado. Regenera desde las fuentes limpias
-// (con alfa real, sin el problema de checkerboard resuelto antes) a ~3x el
-// tamaño de display (retina) en vez de servir el archivo original completo.
+// PageSpeed Insights marcó logo-arcan-advisors.webp (servido a height:59px)
+// y logo-footer.webp (servido a height:85px) como muy pesados para su
+// tamaño mostrado. Regenera desde las fuentes que aporta el cliente
+// (public/logo-arcan-advisors.png, public/LogoFooter.png) a ~3x el tamaño
+// de display (retina) en vez de servir el archivo original completo.
 // Mismo tratamiento para las fotos de Servicios (900x675, mostradas a
-// ~637x478). Volver a correr si cambia algún asset fuente.
+// ~637x478). Volver a correr si el cliente entrega una versión nueva de
+// alguna de estas fuentes.
 import sharp from 'sharp';
 
 async function resizeTo(src, out, { height, width, quality = 82 }) {
@@ -20,14 +21,17 @@ async function resizeTo(src, out, { height, width, quality = 82 }) {
   console.log(`✓ ${target} (${meta.width}x${meta.height})`);
 }
 
-// LogoFooter.png trae el wordmark "ARCAN"/tagline en negro (pensado para
-// fondo claro) — el dorado de la marca queda intacto (nunca cae por debajo
-// de mx~140, confirmado con un scan de la fuente), así que un umbral simple
-// de brillo alcanza para distinguir texto de marca sin tocar el dorado.
-// Sin este paso, resizeTo() de LogoFooter.png solo redimensiona y el
-// wordmark queda negro sobre el Forest Green del footer — invisible.
-async function recolorFooterLogo(src) {
-  const { data, info } = await sharp(src).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+// Los lockups reales que aporta el cliente traen el wordmark "ARCAN" en
+// negro/oscuro (pensado para fondo claro) — el dorado de la marca queda
+// intacto (nunca cae por debajo de mx~140, confirmado con un scan de la
+// fuente), así que un umbral simple de brillo alcanza para distinguir texto
+// de marca sin tocar el dorado. Sin este paso, el wordmark queda oscuro
+// sobre el Forest Green del Nav/footer — invisible. trim() antes de
+// recolorear/redimensionar recorta el padding transparente de la fuente
+// (relevante sobre todo en LogoFooter.png, que trae mucho aire/glow
+// alrededor del mark) para no arrastrar ese padding al tamaño final.
+async function recolorDarkWordmark(src) {
+  const { data, info } = await sharp(src).trim().ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const { width, height, channels } = info;
   for (let p = 0; p < width * height; p++) {
     const o = p * channels;
@@ -46,9 +50,11 @@ async function recolorFooterLogo(src) {
 }
 
 async function main() {
-  await resizeTo('public/logosf.png', 'public/logo-arcan-advisors.webp', { height: 180, quality: 85 });
+  const navRecolored = await recolorDarkWordmark('public/logo-arcan-advisors.png');
+  await navRecolored.resize({ height: 180 }).webp({ quality: 85 }).toFile('public/logo-arcan-advisors.webp.tmp');
+  console.log('✓ public/logo-arcan-advisors.webp.tmp');
 
-  const footerRecolored = await recolorFooterLogo('public/LogoFooter.png');
+  const footerRecolored = await recolorDarkWordmark('public/LogoFooter.png');
   await footerRecolored.resize({ height: 255 }).webp({ quality: 85 }).toFile('public/logo-footer.webp.tmp');
   console.log('✓ public/logo-footer.webp.tmp');
 

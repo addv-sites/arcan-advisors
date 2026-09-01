@@ -5,12 +5,11 @@
 
   Para 'negativa' (Nav/Footer, fondo oscuro) se usa el lockup REAL que
   aportó el cliente (public/logo-arcan-advisors.webp). El archivo actual
-  (2026-08-06, 1350x436) lo generó Antonio a mano reemplazando el .webp
-  directamente — no viene de `scripts/fix-logo-nav.mjs` (ese script sigue
-  siendo referencia de cómo se diagnosticó y limpió el checkerboard de
-  public/logo-arcan-advisors.jpg en la vuelta anterior, pero quedó
-  desincronizado del archivo actual; no asumir que regenerarlo reproduce
-  este resultado).
+  (2026-09-01, fuente public/logo-arcan-advisors.png, 709x180) sale de
+  `scripts/optimize-brand-images.mjs` — recolorea el wordmark "ARCAN" de
+  negro a blanco (la fuente del cliente viene pensada para fondo claro) y
+  recorta+redimensiona. Correr ese script de nuevo si el cliente entrega una
+  versión nueva de logo-arcan-advisors.png.
   'principal' y 'mono' siguen siendo el isólogo reconstruido a mano en SVG
   (no hay asset real para esos fondos todavía) — ver gap en PROJECT_STATE.md.
 */
@@ -27,10 +26,11 @@ interface Props {
 const { variant = 'principal', markOnly = false, class: className = '', footer = false } = Astro.props;
 
 // Footer usa un lockup real distinto (public/logo-footer.webp, derivado de
-// LogoFooter.png que aportó el cliente) — el ARCAN de ese archivo venía en
-// negro (variante fondo claro), se recoloreó a blanco por chroma detection
+// LogoFooter.png que aportó el cliente) — el ARCAN de ese archivo venía
+// oscuro (variante fondo claro), se recoloreó a blanco por chroma detection
 // (achromático + oscuro → blanco, dorado intacto) para que sea legible
-// sobre el Forest Green del footer.
+// sobre el Forest Green del footer. Mismo tratamiento que
+// logo-arcan-advisors.webp, ver scripts/optimize-brand-images.mjs.
 const realLogoFile = footer ? 'logo-footer.webp' : 'logo-arcan-advisors.webp';
 // process.cwd() = raíz del proyecto (donde corre `astro build`), no la
 // ubicación de este componente — import.meta.url-relativo es frágil acá:
@@ -50,7 +50,7 @@ const advisorsColor = variant === 'mono' ? 'currentColor' : 'var(--color-gold)';
       class={`logo-real ${footer ? 'logo-real--footer' : ''} ${className}`}
       src={realLogoSrc}
       alt="Arcan Advisors"
-      width={footer ? '269' : '557'}
+      width={footer ? '329' : '709'}
       height={footer ? '255' : '180'}
     />
   ) : (
