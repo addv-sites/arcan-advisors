@@ -247,7 +247,12 @@ html.reveal-ready [data-reveal-group] > * {
   color: var(--color-text-muted);
   font-size: 0.95rem;
   margin: 0 0 1rem;
-  text-align: left;
+  text-align: justify;
+  /* Sin hyphens:auto a propósito: inserta un guion visible en el salto de
+     palabra, y el cliente no quiere ningún guion/raya en el sitio. Esto
+     permite partir una palabra larga sin marca visible cuando hace falta
+     para que el justificado no deje huecos grandes. */
+  overflow-wrap: anywhere;
 }
 
 .card ul {
