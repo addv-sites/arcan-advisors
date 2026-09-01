@@ -13,7 +13,6 @@ export const SERVICIOS = [
       'Evaluación técnica y económica',
       'Cumplimiento regulatorio',
       'Gestión de riesgos y optimización de ofertas',
-      'Gestión de contratos de suministro eléctrico vigentes',
     ],
     icon: 'M9 3h6v3H9V3Z M6 6h12v15H6V6Z M9 13l2 2 4-4',
     image: 'servicio-01-licitaciones.webp',
@@ -36,6 +35,7 @@ export const SERVICIOS = [
     title: 'Consultoría Estratégica en Energía',
     text: 'Estrategia de compra, análisis de mercado y evaluación de alternativas para que el cliente negocie desde una posición informada.',
     items: [
+      'Gestión de contratos de suministro eléctrico vigentes',
       'Evaluación de alternativas de suministro',
       'Análisis de contratos y riesgos',
       'Análisis de costos y posición competitiva',

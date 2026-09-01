@@ -1,7 +1,7 @@
 // Datos reales de contacto — Brand Book Arcan Advisors v1.0 (pág. 09, "Firma de correo").
 export const SITE = {
   name: 'Arcan Advisors',
-  tagline: 'Conocemos el mercado eléctrico desde adentro',
+  tagline: 'Conocemos el mercado eléctrico mexicano desde adentro',
   legalName: 'Arcan Advisors',
   // FASE PRE-APROBACIÓN: cambiar a 'https://www.arcanadvisors.com' cuando se conecte el dominio propio.
   url: 'https://antonioprado-sketch.github.io/arcan-prototipo/',

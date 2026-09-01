@@ -177,6 +177,7 @@ html.reveal-ready [data-reveal-group] > * {
   color: var(--color-text-muted);
   margin-top: 1rem;
   font-size: 1.05rem;
+  text-align: justify;
 }
 
 .section--dark .section-lead {
@@ -246,6 +247,7 @@ html.reveal-ready [data-reveal-group] > * {
   color: var(--color-text-muted);
   font-size: 0.95rem;
   margin: 0 0 1rem;
+  text-align: justify;
 }
 
 .card ul {
@@ -306,6 +308,7 @@ html.reveal-ready [data-reveal-group] > * {
   color: var(--color-light-gray);
   margin: 0;
   max-width: 46rem;
+  text-align: justify;
 }
 
 @media (prefers-reduced-motion: reduce) {

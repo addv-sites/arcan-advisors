@@ -8,9 +8,9 @@
 */
 const capacidades = [
   'Precios marginales locales (PML)',
-  'Demanda y servicios conexos',
+  'Demanda',
   'Recomendaciones fundamentadas en datos actuales, no en supuestos',
-  'Inteligencia de mercado que normalmente no está al alcance del cliente',
+  'Inteligencia de Mercado, todos los datos del MEM en un solo lugar para una toma de decisiones rápida y estratégica',
 ];
 
 const quantenUrl = 'https://quanten.com.mx/landing/index.html';
@@ -22,15 +22,14 @@ const quantenUrl = 'https://quanten.com.mx/landing/index.html';
       <p class="section-eyebrow">Producto</p>
       <h2 class="section-title">Inteligencia de mercado con Quanten</h2>
       <p class="section-lead">
-        Arcan integra Quanten, una plataforma especializada en datos del Mercado Eléctrico Mayorista —precios marginales locales,
-        demanda y servicios conexos— sobre la cual Arcan cuenta con licenciamiento máster. Esto nos permite fundamentar cada
-        recomendación en datos actuales del mercado, no en supuestos. El cliente accede a inteligencia de mercado que normalmente no
-        está a su alcance, traducida en decisiones de compra concretas.
+        Arcan integra Quanten, una plataforma especializada en datos del Mercado Eléctrico Mayorista, sobre la cual Arcan cuenta con
+        licenciamiento máster. Acceda a toda la información del MEM en un solo lugar y traduzca sus decisiones en acciones concretas
+        para la compra de energía.
       </p>
       <a class="btn btn-secondary producto-link" href={quantenUrl} target="_blank" rel="noopener">Conoce Quanten</a>
       <p class="producto-disclaimer">
         Quanten es la plataforma de un aliado tecnológico bajo licencia. Arcan cuenta con licenciamiento máster con derecho a
-        sublicenciar — no es un desarrollo propio ni un producto tecnológico de Arcan.
+        sublicenciar; no es un desarrollo propio ni un producto tecnológico de Arcan.
       </p>
     </div>
 
@@ -67,6 +66,7 @@ const quantenUrl = 'https://quanten.com.mx/landing/index.html';
   .producto-disclaimer {
     font-family: var(--font-secondary);
     font-size: 0.85rem;
+    text-align: justify;
     /* Sin opacity reducida: bajarla mezcla el color con el fondo oscuro y
        puede tirar el contraste por debajo de 4.5:1 AA. */
     color: var(--color-light-gray);
