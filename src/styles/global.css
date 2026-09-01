@@ -247,7 +247,7 @@ html.reveal-ready [data-reveal-group] > * {
   color: var(--color-text-muted);
   font-size: 0.95rem;
   margin: 0 0 1rem;
-  text-align: justify;
+  text-align: left;
 }
 
 .card ul {
