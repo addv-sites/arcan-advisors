@@ -2,14 +2,13 @@
 // URL base-aware: en CI lee GITHUB_REPOSITORY para no hardcodear DEV/PROD.
 // Local (sin env) cae en DEV.
 const isProdRepo = typeof process !== 'undefined' && process.env.GITHUB_REPOSITORY === 'addv-sites/arcan-advisors';
-const prodUrl = 'https://addv-sites.github.io/arcan-advisors/';
+const prodUrl = 'https://www.arcanadvisors.com/';
 const devUrl = 'https://addv-prototipos.github.io/arcan-prototipo/';
 
 export const SITE = {
   name: 'Arcan Advisors',
   tagline: 'Conocemos el mercado eléctrico mexicano desde adentro',
   legalName: 'Arcan Advisors',
-  // FASE PRE-APROBACIÓN: cambiar a 'https://www.arcanadvisors.com' cuando se conecte el dominio propio.
   url: isProdRepo ? prodUrl : devUrl,
   email: 'contacto@arcanadvisors.com',
   whatsapp: '+525652508354',
