@@ -1,6 +1,19 @@
 # Estado del proyecto — Arcan Advisors
 
-Última actualización: 2026-09-01 (logos Nav/Footer y og-image renovados con assets del cliente)
+Última actualización: 2026-09-02 (estrategia DEV/PROD documentada)
+
+## Repositorios — DEV vs PROD (2026-09-02)
+
+| Entorno | Repo | Remote local | Uso |
+|---|---|---|---|
+| **DEV** | `https://github.com/addv-prototipos/arcan-prototipo.git` | `origin` | Prototipo. Iteración rápida, validación con cliente. Pages: `https://addv-prototipos.github.io/arcan-prototipo/` |
+| **PROD** | `https://github.com/addv-sites/arcan-advisors.git` | `prod` | Producción. Solo recibe código aprobado desde DEV. Dominio final `www.arcanadvisors.com` |
+
+- `git remote -v` debe mostrar ambos: `origin` (DEV) y `prod` (PROD). Configurado en este clon con `git remote add prod https://github.com/addv-sites/arcan-advisors.git`.
+- Reglas por entorno pendientes de definición por el usuario — no asumir (ej.: si PROD exige PR, tag, o push directo). Hasta que se definan: DEV admite `git push origin main` libre (con permiso por push); PROD requiere confirmación explícita del usuario cada vez (`git push prod main` nunca automático).
+- El `base: '/arcan-prototipo/'` y `site` actuales corresponden a DEV. Al promover a PROD con dominio propio, aplicar los 4 cambios de "FASE PRE-APROBACIÓN" (`astro.config.mjs`, `SITE.url`, `public/CNAME`, `robots.txt`/`sitemap.xml`/`manifest.webmanifest`).
+
+## Histórico — última actualización previa: 2026-09-01 (logos Nav/Footer y og-image renovados con assets del cliente)
 
 ## Reposicionamiento completo del sitio (2026-08-25)
 

@@ -37,13 +37,31 @@ Para revisar el build localmente antes de publicar:
 npm run preview
 ```
 
+## Repositorios — DEV vs PROD
+
+| Entorno | Repo | Remote local | Pages / Dominio |
+|---|---|---|---|
+| **DEV** (prototipo, pre-aprobación) | `https://github.com/addv-prototipos/arcan-prototipo.git` | `origin` | `https://addv-prototipos.github.io/arcan-prototipo/` |
+| **PROD** (producción) | `https://github.com/addv-sites/arcan-advisors.git` | `prod` | por definir (`www.arcanadvisors.com` al aprobar dominio) |
+
+Reglas por entorno (el usuario las definirá — placeholders hasta entonces): DEV admite iteración rápida y pushes frecuentes; PROD solo recibe merges controlados desde DEV y requiere aprobación explícita.
+
+```bash
+git remote -v
+# origin  https://github.com/addv-prototipos/arcan-prototipo.git  (DEV)
+# prod    https://github.com/addv-sites/arcan-advisors.git        (PROD)
+
+git push origin main   # deploy DEV
+git push prod main     # deploy PROD (solo con permiso explícito)
+```
+
 ## Deploy — GitHub Pages
 
-El deploy es automático vía GitHub Actions (`.github/workflows/deploy.yml`, se agrega en una fase posterior): cada push a `main` dispara build + publicación en GitHub Pages.
+El deploy es automático vía GitHub Actions (`.github/workflows/deploy.yml`): cada push a `main` dispara build + publicación en GitHub Pages **en el repo que recibió el push** (DEV o PROD).
 
-**Fase actual (pre-aprobación de dominio):** el sitio publica en `https://addv-prototipos.github.io/arcan-prototipo/`.
+**Fase actual (pre-aprobación de dominio):** el sitio publica en `https://addv-prototipos.github.io/arcan-prototipo/` (repo DEV).
 
-**Cuando el cliente apruebe y se conecte `www.arcanadvisors.com`**, hay que tocar 4 lugares (comentados in-code con "FASE PRE-APROBACIÓN"):
+**Cuando el cliente apruebe y se conecte `www.arcanadvisors.com`** (repo PROD), hay que tocar 4 lugares (comentados in-code con "FASE PRE-APROBACIÓN"):
 1. Quitar `base` de `astro.config.mjs`.
 2. Cambiar `site` en `astro.config.mjs` a `https://www.arcanadvisors.com`.
 3. Crear `public/CNAME` con ese dominio.
