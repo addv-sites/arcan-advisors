@@ -41,7 +41,7 @@ npm run preview
 
 El deploy es automático vía GitHub Actions (`.github/workflows/deploy.yml`, se agrega en una fase posterior): cada push a `main` dispara build + publicación en GitHub Pages.
 
-**Fase actual (pre-aprobación de dominio):** el sitio publica en `https://antonioprado-sketch.github.io/arcan-prototipo/`.
+**Fase actual (pre-aprobación de dominio):** el sitio publica en `https://addv-prototipos.github.io/arcan-prototipo/`.
 
 **Cuando el cliente apruebe y se conecte `www.arcanadvisors.com`**, hay que tocar 4 lugares (comentados in-code con "FASE PRE-APROBACIÓN"):
 1. Quitar `base` de `astro.config.mjs`.

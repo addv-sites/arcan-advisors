@@ -4,7 +4,7 @@ export const SITE = {
   tagline: 'Conocemos el mercado eléctrico mexicano desde adentro',
   legalName: 'Arcan Advisors',
   // FASE PRE-APROBACIÓN: cambiar a 'https://www.arcanadvisors.com' cuando se conecte el dominio propio.
-  url: 'https://antonioprado-sketch.github.io/arcan-prototipo/',
+  url: 'https://addv-prototipos.github.io/arcan-prototipo/',
   email: 'contacto@arcanadvisors.com',
   whatsapp: '+525652508354',
   whatsappDisplay: '+52 56 5250 8354',

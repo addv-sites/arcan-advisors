@@ -42,7 +42,7 @@ El usuario aportó `public/BannerArcan.png` (lockup completo real, tipografía s
 
 ## Primer deploy a GitHub Pages — LIVE (2026-08-05)
 
-**El sitio está publicado:** https://antonioprado-sketch.github.io/arcan-prototipo/
+**El sitio está publicado:** https://addv-prototipos.github.io/arcan-prototipo/
 
 Se agregó `.github/workflows/deploy.yml` (build + `actions/deploy-pages`, dispara en push a `main`). Los primeros 3 intentos fallaron:
 - Los primeros 2: Pages todavía no estaba configurado como "GitHub Actions" en Settings → Pages → Source (el usuario lo activó después).
@@ -50,7 +50,7 @@ Se agregó `.github/workflows/deploy.yml` (build + `actions/deploy-pages`, dispa
 
 **Nota para próximos deploys:** cada push a `main` dispara un build+deploy automático. `public/BannerArcan.png` quedó sin trackear a propósito (el usuario confirmó que está mal — dice "ARCANA" en vez de "ARCAN") — no agregarlo a git sin que lo reemplacen.
 
-URL esperada una vez prendido: `https://antonioprado-sketch.github.io/arcan-prototipo/`.
+URL esperada una vez prendido: `https://addv-prototipos.github.io/arcan-prototipo/`.
 
 ## Fix cards de Servicios, 3er ajuste (2026-08-05)
 
@@ -161,7 +161,7 @@ Sitio corporativo estático para **Arcan Advisors** (consultora en inteligencia 
 
 - Stack: Astro sobre vanilla HTML/Web Components y Vite+React (mejor fit componentización + SEO nativo + Lighthouse).
 - Proyecto canónico: `D:\srv\arcan-site`. Existe un segundo proyecto en `C:\Users\Antonio\Desktop\stitch_arcan_advisors_premium_site` (HTML/CSS/JS plano, mismo remote GitHub) que queda **solo como referencia**, no se mergea ni se pushea.
-- Deploy pre-aprobación: `https://antonioprado-sketch.github.io/arcan-prototipo/` (`base` en `astro.config.mjs`). Post-aprobación de dominio propio, tocar: `astro.config.mjs` (quitar `base`, cambiar `site`), `src/data/site.js` (`SITE.url`), agregar `public/CNAME`, **y ahora también** `public/robots.txt` (URL del Sitemap), `public/sitemap.xml` (`<loc>`), `public/manifest.webmanifest` (`start_url`/`scope`/`icons[].src`, están hardcodeados a `/arcan-prototipo/` porque es un JSON estático, no procesado por Astro).
+- Deploy pre-aprobación: `https://addv-prototipos.github.io/arcan-prototipo/` (`base` en `astro.config.mjs`). Post-aprobación de dominio propio, tocar: `astro.config.mjs` (quitar `base`, cambiar `site`), `src/data/site.js` (`SITE.url`), agregar `public/CNAME`, **y ahora también** `public/robots.txt` (URL del Sitemap), `public/sitemap.xml` (`<loc>`), `public/manifest.webmanifest` (`start_url`/`scope`/`icons[].src`, están hardcodeados a `/arcan-prototipo/` porque es un JSON estático, no procesado por Astro).
 - JSON-LD (Fase 4) incluye Organization + ProfessionalService + ContactPoint. Se omiten a propósito: `GeoCoordinates` (no hay lat/long verificada, no se inventa), `BreadcrumbList` (sitio de una sola página con anclas, no aplica jerarquía real), `FAQPage` (no hay contenido de preguntas frecuentes en el brandbook, inventarlo sería spam de SEO).
 - Logo (Fase 4, ajuste de fidelidad): el wordmark "ARCAN ADVISORS" en el arte de marca es serif, no Lato (Lato es la tipografía corporativa para contenido, no la del logotipo). `Logo.astro` se corrigió para usar un stack serif (`Georgia, 'Times New Roman', serif`) solo en el wordmark del logo — regla del brandbook "no modificar tipografía del logo" (lámina 06).
 - Navegación: 5 secciones (Inicio, Nosotros, Servicios, Producto, Contacto) por instrucción explícita del usuario, no las 6 del MockUp ni las de la lámina 09 (ambas ilustrativas, no spec de contenido).

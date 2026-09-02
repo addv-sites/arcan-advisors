@@ -5,7 +5,7 @@
 Necesito que actualices y ajustes el sitio web actual de **Arcan Advisors**:
 
 **Sitio actual:**
-https://antonioprado-sketch.github.io/arcan-prototipo/
+https://addv-prototipos.github.io/arcan-prototipo/
 
 El sitio debe ser actualizado con base en el brief de ajustes proporcionado por el cliente.
 
