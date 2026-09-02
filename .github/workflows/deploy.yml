@@ -30,17 +30,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Ajusta URLs estáticas para PROD (base /arcan-advisors/)
-        if: github.repository == 'addv-sites/arcan-advisors'
-        run: |
-          echo "Parchando public/ para PROD (base /arcan-advisors/)..."
-          sed -i 's|/arcan-prototipo/|/arcan-advisors/|g' public/manifest.webmanifest
-          sed -i 's|https://addv-prototipos.github.io/arcan-prototipo/|https://addv-sites.github.io/arcan-advisors/|g' public/sitemap.xml
-          sed -i 's|https://addv-prototipos.github.io/arcan-prototipo/|https://addv-sites.github.io/arcan-advisors/|g' public/robots.txt
-          echo "--- manifest ---"; cat public/manifest.webmanifest
-          echo "--- sitemap ---"; cat public/sitemap.xml
-          echo "--- robots ---"; cat public/robots.txt
-
       - name: Build
         run: npm run build
 
