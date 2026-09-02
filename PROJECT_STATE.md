@@ -10,7 +10,8 @@
 | **PROD** | `https://github.com/addv-sites/arcan-advisors.git` | `prod` | Producción. Solo recibe código aprobado desde DEV. Dominio final `www.arcanadvisors.com` |
 
 - `git remote -v` debe mostrar ambos: `origin` (DEV) y `prod` (PROD). Configurado en este clon con `git remote add prod https://github.com/addv-sites/arcan-advisors.git`.
-- Reglas por entorno pendientes de definición por el usuario — no asumir (ej.: si PROD exige PR, tag, o push directo). Hasta que se definan: DEV admite `git push origin main` libre (con permiso por push); PROD requiere confirmación explícita del usuario cada vez (`git push prod main` nunca automático).
+- **Regla PROD (producción): push directo con permiso explícito cada vez.** `git push prod main` solo con autorización puntual del usuario, nunca automático. Aplica la regla 4 del protocolo (no push sin permiso) de forma estricta en PROD — cada push a `prod` requiere un "sí, pusheá a prod" explícito, sin asumir por pushes previos a `origin`. DEV (`git push origin main`) también requiere permiso por push, pero admite iteración más frecuente.
+- **Sincronización de docs:** en DEV (`origin`) se sincronizan **todos** los `.md` (`README.md`, `PROJECT_STATE.md`, `AGENTS.md`, `CLAUDE.md`, `IMAGENES_PENDIENTES.md`, `clientCom.md`, etc.). En PROD (`prod`) **solo `README.md`** se sincroniza; `AGENTS.md`, `CLAUDE.md`, `PROJECT_STATE.md` y demás `.md` internos no se pushean a `prod`.
 - El `base: '/arcan-prototipo/'` y `site` actuales corresponden a DEV. Al promover a PROD con dominio propio, aplicar los 4 cambios de "FASE PRE-APROBACIÓN" (`astro.config.mjs`, `SITE.url`, `public/CNAME`, `robots.txt`/`sitemap.xml`/`manifest.webmanifest`).
 
 ## Histórico — última actualización previa: 2026-09-01 (logos Nav/Footer y og-image renovados con assets del cliente)

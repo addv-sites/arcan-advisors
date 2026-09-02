@@ -41,7 +41,7 @@ No hay `npm test` ni Docker en este proyecto — no los propongas ni los asumas.
 1. **Fidelidad de marca absoluta.** Colores, tipografía (Lato + Tahoma, no alternativas "similares"), copy institucional (Misión/Visión/Servicios/Producto) van literal desde el brandbook — no resumir, no reinterpretar, no inventar cifras sin confirmar.
 2. **Compatibilidad GitHub Pages siempre.** Sin Node/backend en producción, rutas base-aware (`import.meta.env.BASE_URL` o `Astro.url`, nunca `href="/algo"` a mano), build real verificado antes de cerrar cualquier cambio.
 3. **Fases con confirmación explícita.** No se implementa nada sin un "implementá fase N" del usuario. Plan/alternativas se presentan primero.
-4. **No `git push` sin permiso explícito**, cada vez.
+4. **No `git push` sin permiso explícito**, cada vez — aplica a `origin` (DEV) y especialmente a `prod` (PROD). Cada `git push prod main` requiere un "sí, pusheá a prod" puntual; nunca automático ni asumido por un permiso previo a DEV.
 5. **`PROJECT_STATE.md` y este archivo se actualizan al cerrar cada fase** — no esperar al final del proyecto.
 6. **`npm run build` real antes de reportar una fase como terminada** — no alcanza con que el dev server funcione.
 7. **`npm audit` en 0 vulnerabilidades antes de cerrar una fase de verificación.** Astro está fijado en `^7.1.6` (subido desde 5.x en Fase 5 por 2 CVEs high) — no bajar la versión sin volver a auditar.
@@ -55,8 +55,9 @@ No hay `npm test` ni Docker en este proyecto — no los propongas ni los asumas.
 | **PROD** | `https://github.com/addv-sites/arcan-advisors.git` | `prod` | `www.arcanadvisors.com` (al aprobar) |
 
 - Este clon ya tiene ambos remotes: `git remote add prod https://github.com/addv-sites/arcan-advisors.git`.
-- `git push origin main` → deploy DEV. `git push prod main` → deploy PROD (solo con permiso explícito del usuario, nunca automático).
-- Reglas por entorno aún no definidas — no asumir workflow de PROD. Esperar indicación del usuario.
+- `git push origin main` → deploy DEV. `git push prod main` → deploy PROD.
+- **Regla PROD:** push directo con permiso explícito cada vez — `git push prod main` solo con un "sí, pusheá a prod" puntual del usuario; nunca automático, nunca asumido por un permiso previo a `origin`.
+- **Sincronización de docs:** en DEV (`origin`) se sincronizan **todos** los `.md` (`README.md`, `PROJECT_STATE.md`, `AGENTS.md`, `CLAUDE.md`, `IMAGENES_PENDIENTES.md`, `clientCom.md`, etc.). En PROD (`prod`) **solo `README.md`** se sincroniza; `AGENTS.md`, `CLAUDE.md`, `PROJECT_STATE.md` y demás `.md` internos no se pushean a `prod`.
 
 ## Imágenes pendientes
 
